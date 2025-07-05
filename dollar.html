@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeMoneyDaily.online - Sweepstakes Casino Sites that offer free Daily money</title>
+    <meta name="description" content="A vibrant single-page website featuring a colorful data table with Notion/Airtable-inspired design. Organize your data with style and functionality using bright, modern colors and responsive design.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Colors */
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #45B7D1;
+            --background: #FFF9E6;
+            --success: #96CEB4;
+            --warning: #FFEAA7;
+            --text-dark: #2D3748;
+            --text-gray: #4A5568;
+            --text-light: #718096;
+            --border-light: #E2E8F0;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: var(--white);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overfLow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-gradient-border {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            padding: 4px;
+            border-radius: 1rem;
+        }
+
+        .table-content {
+            background: var(--white);
+            border-radius: calc(1rem - 4px);
+            overfLow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        }
+
+        .table-header th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .table-row {
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .table-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-row:nth-child(even) {
+            background-color: #F7FAFC;
+        }
+
+        .table-cell {
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .link-text {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 1000;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .link-text:hover {
+            color: var(--primary);
+        }
+
+        .link-text::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .link-text:hover::after {
+            width: 100%;
+        }
+
+        .visit-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .visit-link:hover {
+            color: var(--primary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .badge-active {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .badge-inactive {
+            background-color: #F56565;
+            color: var(--white);
+        }
+
+        .badge-pending {
+            background-color: var(--warning);
+            color: #744210;
+        }
+
+        .badge-High {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .badge-Medium {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .badge-Low {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Mobile Styles */
+        .mobile-container {
+            display: none;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+            overfLow: hidden;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .card-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .table-container {
+                display: none;
+            }
+
+            .mobile-container {
+                display: block;
+            }
+
+            .main-container {
+                padding: 0 1rem 2rem;
+            }
+        }
+
+        /* External Link Icon */
+        .external-icon {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            margin-left: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="title font-poppins">Free Money Daily</h1>
+        <p class="subtitle">Sweepstakes Casino Sites that offer free Daily money</p>
+    </header>
+
+    <!-- Main Table Container -->
+    <main class="main-container">
+        <!-- Desktop Table View -->
+        <div class="table-container">
+            <div class="table-gradient-border">
+                <div class="table-content">
+                    <table class="table">
+                        <thead class="table-header">
+                            <tr>
+                                <th>📊 Item</th>
+                                <th>🔗 Link</th>
+                                <th>📝 Daily Bonus</th>
+                                <th>⭐ priority</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Table rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Card View -->
+        <div class="mobile-container" id="mobileCards">
+            <!-- Mobile cards will be populated by JavaScript -->
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Free Money Daily Online</p>
+    </footer>
+
+    <script>
+        // Data - All 48 sites from your original list
+        const tableData = [
+            { 
+			{ id: 1, name: "REALPRIZE", link: "https://realprize.com/refer/1406441", status: "$1", priority: "High" },
+            { id: 2, name: "SPINQUEST", link: "http://spinquest.com/?u=XFKO17W", status: "$1", priority: "High" },
+            { id: 3, name: "LUCKYSLOTS.US", link: "HTTPS://LUCKYSLOTS.US/", status: "$1", priority: "High" },
+            { id: 4, name: "ZULACASINO", link: "HTTPS://WWW.ZULACASINO.COM/SIGNUP/F2F59E17-7940-431D-A2C9-042DE71CA74E", status: "$1", priority: "High"},
+            { id: 5, name: "SPORTZINO", link: "HTTPS://SPORTZINO.COM/SIGNUP/28720AC7-1758-40BD-B63F-D2A74E4CEA8B", status: "$1", priority: "High" },
+            { id: 6, name: "MOONSPIN.US", link: "HTTPS://MOONSPIN.US/HOME", status: "$1", priority: "High" },
+            { id: 7, name: "FORTUNECOINS", link: "HTTPS://WWW.FORTUNECOINS.COM/LOBBY", status: "$1", priority: "High" },
+            { id: 8, name: "ROLLA", link: "HTTPS://WWW.ROLLA.COM/?RAF=215093", status: "$1", priority: "High" },
+			{ id: 9, name: "GOLDTREASURECASINO", link: "HTTPS://GOLDTREASURECASINO.COM?REFERRER=5YCBR7GR", status: "$1", priority: "High"},
+			{ id: 10, name: "YAYCASINO", link: "HTTPS://WWW.YAYCASINO.COM/SIGNUP/934E9443-5427-4E80-ADCB-DF0EEBA20030", status: "$1", priority: "High"}
+	
+        ];
+
+        // Helper functions
+        function getstatusBadgeClass(status) {
+            switch (status) {
+                case 'Active': return 'badge-active';
+                case 'Inactive': return 'badge-inactive';
+                case 'Pending': return 'badge-pending';
+                default: return 'badge-active';
+            }
+        }
+
+        function getpriorityBadgeClass(priority) {
+            switch (priority) {
+                case 'High': return 'badge-High';
+                case 'Medium': return 'badge-Medium';
+                case 'Low': return 'badge-Low';
+                default: return 'badge-Medium';
+            }
+        }
+
+        // Populate desktop table
+        function populateTable() {
+            const tableBody = document.getElementById('tableBody');
+            
+            tableData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.classname = 'table-row';
+                
+                row.innerHTML = `
+                    <td class="table-cell">
+                        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-text">
+                            ${item.name}
+                        </a>
+                    </td>
+                    <td class="table-cell">
+                     <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="visit-link">
+                            Claim Now
+                            <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                <path d="M15 3h6v6"></path>
+                                <path d="M10 14L21 3"></path>
+                            </svg>
+                        </a>
+                    </td>
+                    <td class="table-cell">
+                        <span class="badge ${getstatusBadgeClass(item.status)}">${item.status}</span>
+                    </td>
+                    <td class="table-cell">
+                        <span class="badge ${getpriorityBadgeClass(item.priority)}">${item.priority}</span>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Populate mobile cards
+        function populateMobileCards() {
+            const mobileContainer = document.getElementById('mobileCards');
+            
+            tableData.forEach(item => {
+                const card = document.createElement('div');
+                card.classname = 'card';
+                
+                card.innerHTML = `
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title font-poppins">
+                                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="link-text">
+                                    ${item.name}
+                                </a>
+                            </h3>
+                            <span class="badge ${getpriorityBadgeClass(item.priority)}">${item.priority}</span>
+                        </div>
+                        <div class="card-details">
+                            <div class="card-detail">
+                                <span class="detail-label">🔗 Link:</span>
+                                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="visit-link">
+                                    Visit Site
+                                    <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                        <path d="M15 3h6v6"></path>
+                                        <path d="M10 14L21 3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">📝 status:</span>
+                                <span class="badge ${getstatusBadgeClass(item.status)}">${item.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                mobileContainer.appendChild(card);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTable();
+            populateMobileCards();
+        });
+    </script>
+</body>
+</html>
