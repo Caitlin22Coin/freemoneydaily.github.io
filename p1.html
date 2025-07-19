@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Money Daily - Special Offers</title>
+    <meta name="description" content="Exclusive sweepstakes casino offers with detailed information about daily bonuses and special promotions.">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .casino-background {
+            background-color: #0d7e58;
+            background-image: url('/images/casino-background.png');
+            background-size: 300px 300px;
+            background-position: 0 0;
+            background-repeat: repeat;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(to bottom, #10b981, #34d399, transparent);
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.5);
+        }
+        
+        .header p {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .navigation {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+        }
+        
+        .nav-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(200,200,200,0.3);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 4rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #374151;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #059669;
+            background: rgba(5,150,105,0.1);
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+        
+        .casino-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .casino-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .casino-table th {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .casino-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(200,200,200,0.3);
+        }
+        
+        .casino-name {
+            font-weight: 600;
+            color: #374151;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .casino-name:hover {
+            color: #059669;
+        }
+        
+        .claim-button {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .claim-button:hover {
+            background: linear-gradient(135deg, #047857, #059669);
+            transform: translateY(-1px);
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .badge-active {
+            background: #10b981;
+            color: white;
+        }
+        
+        .badge-high {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .badge-medium {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .description-section {
+            background: rgba(249,250,251,0.8);
+            padding: 1.5rem;
+            border-top: 1px solid rgba(200,200,200,0.3);
+        }
+        
+        .description-section h3 {
+            color: #059669;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .description-section p {
+            color: #6b7280;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem 0;
+            }
+            
+            .nav-container {
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .casino-table th,
+            .casino-table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .description-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;" class="casino-background"></div>
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); z-index: -1;"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <h1 class="font-poppins">Free Money Daily</h1>
+        <p>Special Sweepstakes Casino Offers</p>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="dollar.html">$1 Daily Sweeps</a>
+                <a href="crypto.html">Free $75 Crypto</a>
+                <a href="p1.html">Special Offers</a>
+                <a href="p2.html">Placeholder2</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Casino 1 -->
+        <div class="casino-card">
+            <table class="casino-table">
+                <thead>
+                    <tr>
+                        <th>📊 Casino</th>
+                        <th>🔗 Action</th>
+                        <th>📝 Daily Bonus</th>
+                        <th>⭐ Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="https://stake.us/" class="casino-name" target="_blank">STAKE.us</a>
+                        </td>
+                        <td>
+                            <a href="https://stake.us/" class="claim-button" target="_blank">
+                                Claim Now
+                                <span>↗</span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge badge-active">$1</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-high">High</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="description-section">
+                <h3>🎰 About This Special Offer</h3>
+                <p>
+                    [200 words about STAKE.us offer] This is where you can add detailed information about the casino's special promotion, daily bonuses, terms and conditions, and what makes this offer unique. You can describe the gameplay experience, bonus structure, wagering requirements, and any special features that set this casino apart from others. Include information about the registration process, verification requirements, and how users can maximize their benefits from this particular offer.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Casino 2 -->
+        <div class="casino-card">
+            <table class="casino-table">
+                <thead>
+                    <tr>
+                        <th>📊 Casino</th>
+                        <th>🔗 Action</th>
+                        <th>📝 Daily Bonus</th>
+                        <th>⭐ Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="https://fortune-coins.com/" class="casino-name" target="_blank">Fortune Coins</a>
+                        </td>
+                        <td>
+                            <a href="https://fortune-coins.com/" class="claim-button" target="_blank">
+                                Claim Now
+                                <span>↗</span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge badge-active">$0.50</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-medium">Medium</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="description-section">
+                <h3>🎰 About This Special Offer</h3>
+                <p>
+                    [200 words about Fortune Coins offer] This is where you can add detailed information about the casino's special promotion, daily bonuses, terms and conditions, and what makes this offer unique. You can describe the gameplay experience, bonus structure, wagering requirements, and any special features that set this casino apart from others. Include information about the registration process, verification requirements, and how users can maximize their benefits from this particular offer.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Casino 3 -->
+        <div class="casino-card">
+            <table class="casino-table">
+                <thead>
+                    <tr>
+                        <th>📊 Casino</th>
+                        <th>🔗 Action</th>
+                        <th>📝 Daily Bonus</th>
+                        <th>⭐ Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="https://www.luckyland.com/" class="casino-name" target="_blank">Luckyland Slots</a>
+                        </td>
+                        <td>
+                            <a href="https://www.luckyland.com/" class="claim-button" target="_blank">
+                                Claim Now
+                                <span>↗</span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge badge-active">$0.30+</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-high">High</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="description-section">
+                <h3>🎰 About This Special Offer</h3>
+                <p>
+                    [200 words about Luckyland Slots offer] This is where you can add detailed information about the casino's special promotion, daily bonuses, terms and conditions, and what makes this offer unique. You can describe the gameplay experience, bonus structure, wagering requirements, and any special features that set this casino apart from others. Include information about the registration process, verification requirements, and how users can maximize their benefits from this particular offer.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Casino 4 -->
+        <div class="casino-card">
+            <table class="casino-table">
+                <thead>
+                    <tr>
+                        <th>📊 Casino</th>
+                        <th>🔗 Action</th>
+                        <th>📝 Daily Bonus</th>
+                        <th>⭐ Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="https://www.chanced.com/" class="casino-name" target="_blank">Chanced Casino</a>
+                        </td>
+                        <td>
+                            <a href="https://www.chanced.com/" class="claim-button" target="_blank">
+                                Claim Now
+                                <span>↗</span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="badge badge-active">$0.25</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-medium">Medium</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="description-section">
+                <h3>🎰 About This Special Offer</h3>
+                <p>
+                    [200 words about Chanced Casino offer] This is where you can add detailed information about the casino's special promotion, daily bonuses, terms and conditions, and what makes this offer unique. You can describe the gameplay experience, bonus structure, wagering requirements, and any special features that set this casino apart from others. Include information about the registration process, verification requirements, and how users can maximize their benefits from this particular offer.
+                </p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Free Money Daily Online</p>
+    </footer>
+</body>
+</html>
