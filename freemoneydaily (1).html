@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreeMoneyDaily.Online - Sweepstakes Casino Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      background: linear-gradient(to bottom, #fffbeb, #fefce8, #f0fdf4);
+      color: #292524;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+    
+    /* Header */
+    .header { display: flex; flex-direction: column; align-items: center; gap: 24px; margin-bottom: 32px; }
+    @media (min-width: 768px) { .header { flex-direction: row; } }
+    .hero-img { width: 192px; height: auto; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); flex-shrink: 0; }
+    .header-text { text-align: center; }
+    @media (min-width: 768px) { .header-text { text-align: left; } }
+    .header h1 { 
+      font-size: 2.5rem; 
+      font-weight: 700;
+      background: linear-gradient(to right, #eab308, #f59e0b, #22c55e); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      letter-spacing: -0.025em;
+    }
+    @media (min-width: 768px) { .header h1 { font-size: 3rem; } }
+    .header p { font-size: 1.125rem; color: #57534e; max-width: 600px; }
+    
+    /* Table */
+    .table-container { 
+      overflow-x: auto; 
+      border-radius: 8px; 
+      border: 1px solid #d6d3d1;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { 
+      background: rgba(245,245,244,0.5);
+      color: #78716c;
+      font-size: 12px; 
+      font-weight: 600;
+      text-transform: uppercase; 
+      letter-spacing: 0.05em; 
+      padding: 12px 16px; 
+      text-align: left; 
+      cursor: pointer; 
+      user-select: none; 
+      white-space: nowrap;
+      border-bottom: 1px solid #e7e5e4;
+      transition: background 0.15s;
+    }
+    th:hover { background: rgba(231,229,228,0.5); }
+    th .sort-icon { margin-left: 4px; opacity: 0.4; font-size: 10px; }
+    th.sorted .sort-icon { opacity: 1; }
+    td { padding: 16px; border-bottom: 1px solid rgba(231,229,228,0.5); color: #57534e; }
+    tr:nth-child(even) { background: rgba(250,250,249,1); }
+    tr:hover { background: rgba(245,245,244,0.5); }
+    tr:last-child td { border-bottom: none; }
+    
+    /* Links */
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    /* Site cell with icons */
+    .site-cell { display: flex; align-items: center; gap: 8px; color: #292524; font-weight: 500; font-size: 15px; }
+    .tier-cell { font-weight: 700; color: #292524; }
+    .icon { 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      width: 20px; 
+      height: 20px; 
+      border-radius: 50%; 
+      font-size: 11px; 
+      cursor: help;
+      font-weight: 600;
+    }
+    .icon-deposited { background: rgba(34,197,94,0.15); color: #16a34a; }
+    .icon-withdrawn { background: rgba(168,85,247,0.15); color: #9333ea; }
+    .icon-24h { background: rgba(234,179,8,0.15); color: #ca8a04; }
+    .icon-calendar { background: rgba(249,115,22,0.15); color: #ea580c; }
+    
+    /* Tooltips */
+    .tooltip { position: relative; }
+    .tooltip:hover::after { 
+      content: attr(data-tooltip); 
+      position: absolute; 
+      bottom: calc(100% + 6px); 
+      left: 50%; 
+      transform: translateX(-50%); 
+      background: #292524;
+      color: #fff; 
+      padding: 6px 10px; 
+      border-radius: 6px; 
+      font-size: 12px; 
+      font-weight: 400;
+      white-space: nowrap; 
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    
+    /* Stats */
+    .stats { margin-top: 16px; font-size: 14px; color: #78716c; padding-left: 4px; }
+    .hit-counter { text-align: center; color: #a8a29e; font-size: 12px; margin-bottom: 32px; }
+    .hit-counter a { color: #a8a29e; }
+    
+    /* Contact form */
+    .contact { 
+      margin-top: 48px; 
+      padding: 32px; 
+      background: linear-gradient(135deg, rgba(254,249,195,0.5), rgba(254,252,232,0.5));
+      border: 2px solid rgba(251,191,36,0.3); 
+      border-radius: 12px; 
+      text-align: center; 
+    }
+    .contact h2 { 
+      color: #b45309;
+      font-size: 1.5rem; 
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .contact p { color: #57534e; margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .contact-form { display: flex; flex-direction: column; gap: 12px; max-width: 500px; margin: 0 auto; }
+    @media (min-width: 640px) { .contact-form { flex-direction: row; } }
+    .contact-form textarea { 
+      flex: 1; 
+      padding: 12px 16px; 
+      border-radius: 6px; 
+      border: 1px solid #d6d3d1;
+      background: white;
+      color: #292524;
+      resize: none; 
+      min-height: 44px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .contact-form textarea:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+    .contact-form button { 
+      padding: 12px 24px; 
+      background: linear-gradient(to right, #22c55e, #16a34a);
+      border: none; 
+      border-radius: 6px; 
+      color: white; 
+      font-weight: 600; 
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .contact-form button:hover { background: linear-gradient(to right, #16a34a, #15803d); transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="hero.png" alt="Free Money Daily" class="hero-img" />
+      <div class="header-text">
+        <h1>FreeMoneyDaily.Online</h1>
+        <p>Your ultimate guide to sweepstakes casinos with daily free coins, bonuses, and rewards.</p>
+      </div>
+    </header>
+    
+    <div class="table-container">
+      <table id="sitesTable">
+        <thead>
+          <tr>
+            <th data-sort="tierRating">Tier <span class="sort-icon">↕</span></th>
+            <th data-sort="site">Site <span class="sort-icon">↕</span></th>
+            <th data-sort="dailyGift">Daily Gift <span class="sort-icon">↕</span></th>
+            <th data-sort="otherGift">Other Gift <span class="sort-icon">↕</span></th>
+            <th data-sort="cooldown">Cooldown <span class="sort-icon">↕</span></th>
+            <th data-sort="operator">Operator <span class="sort-icon">↕</span></th>
+            <th data-sort="country">Country <span class="sort-icon">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    
+    <div class="stats">Showing 133 sweepstakes sites</div>
+    
+    <div class="hit-counter">
+      <div id="sfcgl6p1c3y8mwnprkea496mcwhu4u1w7sw"></div>
+      <script type="text/javascript" src="https://counter1.optistats.ovh/private/counter.js?c=gl6p1c3y8mwnprkea496mcwhu4u1w7sw&down=async" async></script>
+      <br><a href="https://www.freecounterstat.com">website hit counter</a>
+      <noscript><a href="https://www.freecounterstat.com" title="website hit counter"><img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=gl6p1c3y8mwnprkea496mcwhu4u1w7sw" border="0" title="website hit counter" alt="website hit counter"></a></noscript>
+    </div>
+    
+    <div class="contact">
+      <h2>Submit a Casino</h2>
+      <p>Is there a casino with a daily bonus missing from my list? Please submit it to me and I will feature your referral link for at least 7 days!</p>
+      <div class="contact-form">
+        <textarea id="referralLink" placeholder="Paste your referral link here..."></textarea>
+        <button onclick="submitCasino()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sites = [{"id":135,"site":"Zunado","siteUrl":"https://app.zunado.com/invite/piSIAwLgM0wO","tierRating":"TBD","dailyGift":"0.24","otherGift":"","cooldown":"24 hour","operator":"CT-Tech North America LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":136,"site":"Zulacasino","siteUrl":"https://www.zulacasino.com/signup/f2f59e17-7940-431d-a2c9-042de71ca74e","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"SCPS LLC.","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false},{"id":137,"site":"Zoot","siteUrl":"https://getzoot.us/?referralCode=ZOOTwithUSER138639","tierRating":"TBD","dailyGift":"$0.20","otherGift":"","cooldown":"calendar day","operator":"Enigma Lake Holdings, Inc.","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":138,"site":"Yaycasino","siteUrl":"https://www.yaycasino.com/signup/934e9443-5427-4e80-adcb-df0eeba20030","tierRating":"TBD","dailyGift":"$0.25-$1","otherGift":"","cooldown":"24 hour","operator":"Social Gaming LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":139,"site":"Wowvegas","siteUrl":"https://www.wowvegas.com/?raf=9814348","tierRating":"S","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"MW SERVICES LIMITED","country":"Gibraltar","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true},{"id":140,"site":"Withyotta","siteUrl":"https://join.withyotta.com/FMDO","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Yotta Technologies","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":141,"site":"Winpanda","siteUrl":"https://www.winpanda.com?referral_code=7d1773c3-1a1d-4a04-adf4-70ce207c913e","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Winpanda LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":142,"site":"Wildhorsebucks","siteUrl":"https://wildhorsebucks.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"The Outcome Optimizers Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":143,"site":"Vpbet","siteUrl":"https://vpbet2.us?c=in2ITP8","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Platinum; Technology N.V","country":"Curacao","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":144,"site":"Vegasway","siteUrl":"http://vegasway.com/?invited_by=SLFTJA","tierRating":"B","dailyGift":"$0.23","otherGift":"10 FS w/ 11 day streak","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":145,"site":"Thewinzone","siteUrl":"https://www.thewinzone.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"playSWEEPS, LLC,","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":146,"site":"Themoneyfactory","siteUrl":"https://www.themoneyfactory.com/referral?referralcode=6ce398f2-14ab-40ec-a484-5e15f0bcc469","tierRating":"D","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Money Factory LLC (us)","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":147,"site":"Theboss","siteUrl":"https://www.theboss.casino?referralcode=2d0210b4-ff50-4686-abf3-a8281be9f862","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Boss Development Ltd","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":148,"site":"Taofortune","siteUrl":"https://taofortune.com/?invited_by=69M854","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"A1 Development","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":149,"site":"Sweetsweeps","siteUrl":"https://sweetsweeps.com?referralCode=REFOTA1MQ==","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Solutions Limited","country":"Gibraltar","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":150,"site":"Sweepsroyal","siteUrl":"https://sweepsroyal.com/?ref=r_jasnlcas","tierRating":"C","dailyGift":"wheel spin","otherGift":"","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"10,000 GC & 30 Free SC: 200% Extra","hasDeposited":false,"hasWithdrawn":false},{"id":151,"site":"Sweepspot","siteUrl":"https://sweepspot.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Riverano Ltd","country":"Cyprus","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":152,"site":"Sweepshark","siteUrl":"http://sweepshark.com/?invited_by=R23988","tierRating":"B","dailyGift":"$0.20","otherGift":"15 FS with streak","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":153,"site":"Sweepluxe","siteUrl":"https://sweepluxe.com/sign-up?referralCode=D3FWaD","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Sweepluxe Corporation","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":154,"site":"Sweeplasvegas","siteUrl":"https://www.sweeplasvegas.com/signup?ref=jasnlcas_26021","tierRating":"TBD","dailyGift":"wheel spin","otherGift":"","cooldown":"24 hour","operator":"Digital Entertainment Development LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":155,"site":"Sweepjungle","siteUrl":"https://sweepjungle.com/?ref=FD075260614D0031&modal=register","tierRating":"TBD","dailyGift":"$0.10 or FS","otherGift":"Wheel Spin","cooldown":"calendar day","operator":"Kinetix Ventures","country":"USA (Delaware)","welcomeOffer":"Up to 645k Gold Coins + 57 SC","hasDeposited":false,"hasWithdrawn":false},{"id":156,"site":"Sweepico","siteUrl":"http://sweepico.com/?invited_by=P64IPT","tierRating":"B","dailyGift":"$0.30","otherGift":"15 FS with streak","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Idaho)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":157,"site":"Sweeper","siteUrl":"https://sweepercasino.com/register?referralcode=4cb933c6-50d1-484c-b811-0223afeb4e73","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Lucky Hands LLC","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":158,"site":"Stake","siteUrl":"https://stake.us/?c=V6Jnn5lx","tierRating":"S","dailyGift":"","otherGift":"$1","cooldown":"24 hour","operator":"Sweepsteaks Limited","country":"Cyprus","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true},{"id":159,"site":"Spree","siteUrl":"https://spree.com/?r=1489020","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"lay Spree Ltd","country":"Isle Of Man","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false},{"id":160,"site":"Sportzino","siteUrl":"https://sportzino.com/signup/28720ac7-1758-40bd-b63f-d2a74e4cea8b","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"SSPS LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":161,"site":"Spinsamerica","siteUrl":"https://spinsamerica.com/games/home?referral=aNroUGqPn5eAmarsTrP7V5iSL9ESov/PE9uFroZBgWA=","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"4Play Gaming","country":"India","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":162,"site":"Spinsaga","siteUrl":"https://play.spinsagacasino.com/?ref=69960&campaign=referFriend","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Spin Saga Inc","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":163,"site":"Spinquest","siteUrl":"https://spinquest.com/?u=XFKO17W","tierRating":"A","dailyGift":"$1","otherGift":"","cooldown":"24 hour","operator":"Social Gaming Room LLC","country":"USA (California)","welcomeOffer":"200% Extra: 300,000 Gold Coins + 30 SC Free","hasDeposited":true,"hasWithdrawn":true},{"id":164,"site":"Spinfinite","siteUrl":"https://www.spinfinite.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Forever Winning LL","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":165,"site":"Spindoo","siteUrl":"https://www.spindoo.us/?r=29077658","tierRating":"TBD","dailyGift":"wheel spin","otherGift":"","cooldown":"24 hour","operator":"PMSG Media Limited","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":166,"site":"Spinblitz","siteUrl":"https://www.spinblitz.com/lp/raf?r=6b59fe37%2F1928995749","tierRating":"B","dailyGift":"0.1","otherGift":"","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":167,"site":"Speedsweeps","siteUrl":"https://speedsweeps.com/?ref=r_jasnlcas","tierRating":"C","dailyGift":"wheel spin","otherGift":"","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":168,"site":"Sorceryreels","siteUrl":"https://game.sorceryreels.com?raf=Z9FFBX08","tierRating":"unverifed","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Fish Bear Studio Limited","country":"Hong Kong","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":169,"site":"Smilescasino","siteUrl":"https://smilescasino.com/promotions/refer-a-friend/U2FsdGVkX1%2FMN49%2BCrK6fAPr95fEqFL6Bzt0cIFzIWc%3D","tierRating":"TBD","dailyGift":"wheel spin","otherGift":"","cooldown":"calendar day","operator":"10 Ten Gaming LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":170,"site":"Sixty6","siteUrl":"https://sixty6.com/?ref=5F89C2E802632B68&modal=register","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Kinetix Ventures","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":171,"site":"Sidepot","siteUrl":"https://sidepot.us","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"no daily","operator":"Fliff Inc","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":172,"site":"Sheesh","siteUrl":"https://sheeshcasino.com?ref=zdi0ndb","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"P8D Interactive Inc","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":173,"site":"Scoop","siteUrl":"https://scoop.com/?ref=r_jasnlcas","tierRating":"TBD","dailyGift":"","otherGift":"wheel","cooldown":"24 hour","operator":"My Scoop LLC","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":174,"site":"Scarletsands","siteUrl":"http://scarletsands.com/?invited_by=YN8TG5","tierRating":"B","dailyGift":"0.2","otherGift":"wheel, dice, 10 FS w/ 7 day streak","cooldown":"24 hour","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":175,"site":"Rubysweeps","siteUrl":"https://play.rubysweeps.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Ruby Play Network Limited.","country":"New Zealand?","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":176,"site":"Roxymoxy","siteUrl":"https://roxymoxy.com/home?invite=387ccf766a","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Rainforest Ltd","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":177,"site":"RollRoyale","siteUrl":"https://rollroyale.net/play?ref=1ZM9EJ","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"no daily","operator":"ARB Services,","country":"Estonia","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":178,"site":"Rollingriches","siteUrl":"https://www.rollingriches.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Rolling Riches Ltd","country":"British Virgin Islands","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":179,"site":"Rolla","siteUrl":"https://www.rolla.com/?raf=215093","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"MW SERVICES LIMITED","country":"Gibraltar","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":180,"site":"Richsweeps","siteUrl":"https://richsweeps.com/?ref=r_jasnlcas","tierRating":"C","dailyGift":"wheel","otherGift":"","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":181,"site":"Real Prize","siteUrl":"https://realprize.com/refer/1406441","tierRating":"S","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"RealPlay Tech inc","country":"USA (Delaware)","welcomeOffer":"Up to 125 SC FREE + 625K Golden Coins + 1250 VIP Points","hasDeposited":true,"hasWithdrawn":true},{"id":182,"site":"Rainbows-End","siteUrl":"https://www.rainbows-end.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Big Sky Gaming, LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":183,"site":"Punt","siteUrl":"https://punt.com/c/94bs6y","tierRating":"C","dailyGift":"0.22","otherGift":"","cooldown":"24 hour","operator":"Gold Coin Group LLC","country":"USA (Texas)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":184,"site":"Pulszbingo","siteUrl":"https://www.pulszbingo.com/?invited_by=zeqaq5","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Yellow Social Interactive Limited","country":"Gibraltar","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false},{"id":185,"site":"Pulsz","siteUrl":"https://www.pulsz.com/?invited_by=r1bx51","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Yellow Social Interactive Limited","country":"Gibraltar","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true},{"id":186,"site":"Playtana","siteUrl":"http://playtana.com/?invited_by=2CCEPB","tierRating":"B","dailyGift":"$0.20","otherGift":"10 FS w/ 7 day streak","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":187,"site":"Playbracco","siteUrl":"https://playbracco.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"no daily","operator":"Bracco LLC","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":188,"site":"Play Fame","siteUrl":"https://www.playfame.com/lp/raf?r=1918888570","tierRating":"B","dailyGift":"0.1","otherGift":"","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":189,"site":"Onyxodds","siteUrl":"https://onyxodds.com/?promo_code=UZ456003","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Onyx Games LLC","country":"USA (New York)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":190,"site":"Nolimitcoins","siteUrl":"https://nolimitcoins.com/?invited_by=QWVLSC","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"A1 Development LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":191,"site":"Nioplay","siteUrl":"http://nioplay.net/?referralcode=a2b29dfc-04e1-4123-b04f-9e46e5206888","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Nio Consolidated, LLC","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":192,"site":"Myprize","siteUrl":"https://myprize.us/invite/player8545847874443","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Private Equity","country":"USA","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false},{"id":193,"site":"Mrgoodwin","siteUrl":"https://mrgoodwin.com/?invited_by=RYJWYA","tierRating":"B","dailyGift":"FS","otherGift":"wheel spin","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":194,"site":"Moozi","siteUrl":"https://moozi.com/signup?referral_code=7304516009","tierRating":"C","dailyGift":"0.3","otherGift":"","cooldown":"24 hour","operator":"Moshy Gaming LLC (US)","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":195,"site":"Moonspin","siteUrl":"https://moonspin.us/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Solar Bloom LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":196,"site":"Modo","siteUrl":"https://modo.us?referralCode=O9GK31","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"ARB Gaming LLC. USA","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":true},{"id":197,"site":"Megaspinz","siteUrl":"https://www.megaspinz.com","tierRating":"TBD","dailyGift":"$0.10","otherGift":"","cooldown":"calendar day","operator":"Petique Labs LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":198,"site":"Megabonanza","siteUrl":"https://www.megabonanza.com/?r=299676068","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"LuminaryPlay Operations Limited","country":"Isle Of Man","welcomeOffer":"150% First Purchase Offer: Up to 600,000 GC and 303 SC Free","hasDeposited":false,"hasWithdrawn":false},{"id":199,"site":"Mcluck","siteUrl":"https://www.mcluck.com/lp/raf?r=2abc6ee2%2F1918947044","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"3 Purchase Offer: 227,000 GC + 107.5 SC","hasDeposited":false,"hasWithdrawn":false},{"id":200,"site":"Lunarluck","siteUrl":"https://lunarluck.us/","tierRating":"TBD","dailyGift":"$0.20","otherGift":"","cooldown":"calendar day","operator":"Mixxxed Bag LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":201,"site":"Lunalandcasino","siteUrl":"https://lunalandcasino.com/?inviter=355a8bd0-c618-5b1c-838a-4d59c42e299e&utm_source=referral&utm_medium=inviteafriend","tierRating":"TBD","dailyGift":"0.24","otherGift":"","cooldown":"24 hour","operator":"Parana Plays LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":202,"site":"Luckyzino","siteUrl":"https://luckyzino.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Luckyzino LTD","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":203,"site":"Luckyslots","siteUrl":"https://luckyslots.us?raf=c0F3VFBWUWM4ejJseHB5cWxSTHg=","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Sweet Innovation LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":204,"site":"Luckyrush","siteUrl":"https://luckyrush.io/register?referral=lvc5vc8","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"High Rollers of St. Lucie, Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":205,"site":"Luckylandslots","siteUrl":"https://luckylandslots.com","tierRating":"S","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false},{"id":206,"site":"Luckylandcasino","siteUrl":"https://uckylandcasino.com/","tierRating":"S","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true},{"id":207,"site":"Luckyhands","siteUrl":"https://luckyhands.com/sign-up?code=8d151d9e-2379-459f-a0bf-65953cfcbd66","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Liberty Crest Rewards LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":208,"site":"Luckycanoe","siteUrl":"https://app.luckycanoe.com?c=e3kea2nkdp","tierRating":"TBD","dailyGift":"0.2","otherGift":"","cooldown":"24 hour","operator":"Rad Software","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":209,"site":"Luckybitsvegas","siteUrl":"https://luckybitsvegas.com/gc?adId=INV001%3Ajasnlcas","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"LBV Social LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":210,"site":"LuckyBird","siteUrl":"https://luckybird.vip/?c=c_jasnlcas","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Atlantic Management, B.V","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":211,"site":"Lucky.Me","siteUrl":"https://www.lucky.me/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Lucky Me Ventures LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":212,"site":"Luckparty","siteUrl":"https://luckparty.com/signup/67978a2c-2010-4c76-b273-415f0b01c086","tierRating":"A","dailyGift":"$0.25-$1","otherGift":"","cooldown":"calendar day","operator":"SPSE LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":213,"site":"Lucklake","siteUrl":"https://app.lucklake.com?c=WZRm78BGqb","tierRating":"TBD","dailyGift":"0.2","otherGift":"","cooldown":"24 hour","operator":"Rad Software","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":214,"site":"Lonestar","siteUrl":"https://lonestarcasino.com/refer/725187","tierRating":"S","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Realplay Tech Inc.","country":"USA (Delaware)","welcomeOffer":"500k GC, 105 Free SC & 1000 VIP Points","hasDeposited":true,"hasWithdrawn":true},{"id":215,"site":"Lionsdengames","siteUrl":"https://www.lionsdengames.net/U-DMTDHM1Y","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"no daily","operator":"J&K Studios, Inc","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":216,"site":"Legendz","siteUrl":"https://www.legendz.com/?referred_by_id=439082","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Platinum Panther Ltd","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":217,"site":"Lavishluck","siteUrl":"https://invite.lavishluck.net/8dID/0cyelj9k?c=CYP9ZCXU","tierRating":"D","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"PRUDENT OWL LIMITED (Hong Kong)","country":"Hong Kong","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":218,"site":"Kingprize","siteUrl":"https://SStack/i-25dnuodq0-n/","tierRating":"TBD","dailyGift":"0.2","otherGift":"wheel","cooldown":"24 hour","operator":"OMENTERPRISEUSA INC","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":219,"site":"Kickr","siteUrl":"https://kickr.com/signup/pb5a5tw1","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Kickr Games Pty Ltd","country":"Australia","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":220,"site":"Jumbo88","siteUrl":"https://www.jumbo88.com/signup?referralCode=ann55t","tierRating":"TBD","dailyGift":"wheel","otherGift":"","cooldown":"24 hour","operator":"InspireCore Technologies Inc","country":"Canada","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":221,"site":"Jefe","siteUrl":"https://www.jefebet.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"FSG Digital, Inc","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":222,"site":"Jackpotrabbit","siteUrl":"https://jackpotrabbit.com/?invited_by=XF17NH","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Idaho)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":223,"site":"Jackpota","siteUrl":"https://www.jackpota.com/?r=235566939","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"SILVER SOCIAL OPERATIONS LIMITED","country":"Isle Of Man","welcomeOffer":"Best Offer: 80,000 GC, 42 SC & 77 Free SC Spins","hasDeposited":true,"hasWithdrawn":true},{"id":224,"site":"Hush","siteUrl":"https://www.hushcasino.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Reality Forge Labs, Inc","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":225,"site":"High5","siteUrl":"https://high5casino.com/gc?adId=INV001%3Ajasnlcas","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"High 5 Games, LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":226,"site":"Hellomillions","siteUrl":"https://www.hellomillions.com/lp/raf?r=9495cead%2F1918933896","tierRating":"B","dailyGift":"0.1","otherGift":"","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":227,"site":"Havanafortuna","siteUrl":"https://havanafortuna.com/en/sign-up?promo=jasnlcas","tierRating":"TBD","dailyGift":"0.2","otherGift":"wheel","cooldown":"24 hour","operator":"Social Interactive Promotions LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":228,"site":"Grandvault","siteUrl":"https://grandvaultcasino.com/games/home?referral=MAP7kjJvEwz8VEUCZ4p30cUkkMe2W3O8pII+E0xgWuk=","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"247 Entertainment LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":229,"site":"Goodvibes","siteUrl":"https://goodvibescasino.com/","tierRating":"TBD","dailyGift":"0.5","otherGift":"","cooldown":"24 hour","operator":"LGT Development LLC","country":"USA (Nevada","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":230,"site":"Goldtreasure","siteUrl":"https://goldtreasurecasino.com?referrer=5ycBr7gR","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Miracle Studio 8","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":231,"site":"Goldslips","siteUrl":"https://play.goldslips.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Rubystone Ventures LLC","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":232,"site":"Goldmachine","siteUrl":"https://www.goldmachine.com?referral_code=8c1b6591-8e0f-415c-910a-840e7ba02e59","tierRating":"TBD","dailyGift":"0.2","otherGift":"wheel","cooldown":"24 hour","operator":"Gold Machine LLC","country":"USA (Texas)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":233,"site":"Goldenheartsgames","siteUrl":"https://www.goldenheartsgames.com/referral/QOX9LD19FE","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Golden Hearts Games Inc","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":234,"site":"Gogogold","siteUrl":"https://gogogoldwin.com/?qid=xia0bh1b","tierRating":"TBD","dailyGift":"0.3","otherGift":"","cooldown":"calendar day","operator":"Crestline Game Ltd.","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":235,"site":"Globalpoker","siteUrl":"https://play.globalpoker.com/","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":236,"site":"Gains","siteUrl":"https://gains.com/?ref=jasnlcas","tierRating":"TBD","dailyGift":"0.2","otherGift":"","cooldown":"24 hour","operator":"GamerGains Labs, Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":237,"site":"Funzcity","siteUrl":"http://funzcity.com/?invited_by=2A7QZ4","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"A1 Development LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":238,"site":"Funrize","siteUrl":"https://funrize.com/?invited_by=SB8SFB","tierRating":"B","dailyGift":"$0.20","otherGift":"10 FS w/ 7 day streak, wheel","cooldown":"24 hour","operator":"A1 Development LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":239,"site":"Freespin","siteUrl":"https://freespin.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"","country":"Curacao","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":240,"site":"Fortunewheelz","siteUrl":"http://fortunewheelz.com/?invited_by=OAJZXR","tierRating":"B","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"A1 Development","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":241,"site":"Fortunecoins","siteUrl":"https://www.fortunecoins.com/signup/d764f020-c302-4b10-80a8-e79ec07af8bb","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Social Gaming LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false},{"id":242,"site":"Firesevens","siteUrl":"http://firesevens.com/?invited_by=DBK655","tierRating":"B","dailyGift":"","otherGift":"claw machine,","cooldown":"24 hour","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":243,"site":"Epicsweep","siteUrl":"https://epicsweep.us?ref=18235_jasnlcas","tierRating":"TBD","dailyGift":"wheel spin","otherGift":"","cooldown":"24 hour","operator":"Epic Social Play Inc","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":244,"site":"Dimesweeps","siteUrl":"https://dimesweeps.com/?ref=r_jasnlcas","tierRating":"C","dailyGift":"wheel spin","otherGift":"","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":245,"site":"Daruma","siteUrl":"https://daruma.us/","tierRating":"TBD","dailyGift":"FS","otherGift":"","cooldown":"calendar day","operator":"No Days Off Enterprises","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":246,"site":"DaraCasino","siteUrl":"https://daracasino.com/signup?refferalCode=sRi5tjF8zh","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Gateway Guardian Administrators, LLC","country":"USA (Virginia)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":247,"site":"CrownCoinsCasino","siteUrl":"https://crowncoinscasino.com/?utm_campaign=69ae3557-b391-4929-8903-096ef348faf6&utm_source=friends","tierRating":"S","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"Sunflower Limited","country":"USA (Virginia)","welcomeOffer":"200% More Coins on First Purchase: 1.5 Million Crown Coins & 75 SC","hasDeposited":true,"hasWithdrawn":true},{"id":248,"site":"Cosmoslots","siteUrl":"https://www.cosmoslots.com/register?invitecode=CZLKTF","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"LGB Industries","country":"USA / India","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":249,"site":"Coolspin","siteUrl":"https://game.coolspinslot.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"ETERNAL BOOM LIMITED","country":"Hong Kong","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":250,"site":"Coinz","siteUrl":"https://coinz.us/?referral_code=cdd483bd694e7bbc","tierRating":"TBD","dailyGift":"","otherGift":"daily scratcher","cooldown":"calendar day","operator":"Nickle Tech LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":251,"site":"Coinsroyale","siteUrl":"https://www.coinsroyale.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"NiyaSG LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":252,"site":"Clubspoker","siteUrl":"https://play.clubs.poker/?referralCode=185280","tierRating":"C","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"KHK Games","country":"USA (Pennsylvania)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":253,"site":"Cidercasino","siteUrl":"https://cidercasino.onelink.me/QfGN/oio1bede?c=EZU4TS7M","tierRating":"TBD","dailyGift":"$0.30","otherGift":"","cooldown":"calendar day","operator":"Mystic Mirror Studio Limited. Aevorix Play Inc","country":"USA (Colorado)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":254,"site":"Chumbacasino","siteUrl":"https://www.chumbacasino.com/","tierRating":"A","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":true},{"id":255,"site":"Chipnwin","siteUrl":"https://chipnwin.com/?earn=tql5NbEv","tierRating":"B","dailyGift":"$0.20","otherGift":"","cooldown":"calendar day","operator":"Сhipnwin LLC","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":256,"site":"Chanced","siteUrl":"https://chanced.com/c/gqa8cj","tierRating":"C","dailyGift":"$0.18","otherGift":"","cooldown":"24 hour","operator":"Gold Coin Group LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":257,"site":"Casino.Click","siteUrl":"https://casino.click/?modal=iqs-sign-up&ReferenceCode=255736&AffiliatePlatformId=200","tierRating":"C","dailyGift":"FS","otherGift":"","cooldown":"calendar day","operator":"eponymous company","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":258,"site":"Cashoomo","siteUrl":"https://cashoomo.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Green Candy Solutions, Inc","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":259,"site":"Carnivalciti","siteUrl":"https://www.carnivalciti.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"24 hour","operator":"Citi Media Group","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":260,"site":"Bitsky","siteUrl":"https://www.bitsky.bet/affiliate-invite/?affiliate_code=MzQxMjI=","tierRating":"TBD","dailyGift":"$0.39","otherGift":"Wheel Spin","cooldown":"24 hour","operator":"ABAR LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":261,"site":"Bigshotgames","siteUrl":"https://www.bigshotgames.com/","tierRating":"TBD","dailyGift":"$0.10","otherGift":"","cooldown":"calendar day","operator":"Big Shot Games Interactive, LLC","country":"USA (Minnesota)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":262,"site":"Bigpirate","siteUrl":"https://bigpirate.com/","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"calendar day","operator":"AFFIGO LIMITED","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":263,"site":"Bankrolla","siteUrl":"https://bankrolla.com/","tierRating":"TBD","dailyGift":"$0.10","otherGift":"","cooldown":"24 hour","operator":"Epic Play Holding Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":264,"site":"Americanluck","siteUrl":"https://americanluck.com/signup/c1ae5ef6-708e-4069-b3f0-1872f495f89b","tierRating":"A","dailyGift":"$0.50","otherGift":"","cooldown":"calendar day","operator":"SGSE LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":265,"site":"Americana","siteUrl":"https://www.americanacasino.com/?aff=17429","tierRating":"TBD","dailyGift":"Not Live","otherGift":"","cooldown":"calendar day","operator":"Dream Gaming Entertainment Inc","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":266,"site":"Acorn","siteUrl":"https://wap.acornfun.com/#/dashboard/welcome?channel=Refer&campaign=Refer&invite_code=DANYNJW3","tierRating":"TBD","dailyGift":"","otherGift":"","cooldown":"","operator":"Jupiter Studio Limited","country":"USA (New Jersey)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false},{"id":267,"site":"Ace","siteUrl":"https://www.ace.com/?r=3d00e5ce%2F25682649","tierRating":"TBD","dailyGift":"Wheel Spin","otherGift":"","cooldown":"24 hour","operator":"Full Stop Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false}];
+    const tierOrder = { s: 0, a: 1, b: 2, c: 3, d: 4, f: 5 };
+    let sortField = 'tierRating';
+    let sortDir = 'asc';
+
+    function renderCooldown(cooldown) {
+      const lower = (cooldown || '').toLowerCase();
+      if (lower === '24 hour' || lower === '24 hours') {
+        return '<span class="tooltip icon icon-24h" data-tooltip="24 hour cooldown">⏳</span>';
+      }
+      if (lower === 'calendar day') {
+        return '<span class="tooltip icon icon-calendar" data-tooltip="Calendar day cooldown">📅</span>';
+      }
+      return cooldown || '';
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = data.map((site, i) => `
+        <tr>
+          <td class="tier-cell">${site.tierRating || ''}</td>
+          <td>
+            <div class="site-cell">
+              <a href="${site.siteUrl}" target="_blank" rel="noopener">${site.site}</a>
+              ${site.hasDeposited ? '<span class="tooltip icon icon-deposited" data-tooltip="I have personally already deposited here">$</span>' : ''}
+              ${site.hasWithdrawn ? '<span class="tooltip icon icon-withdrawn" data-tooltip="I have personally successfully withdrawn from here">✓</span>' : ''}
+            </div>
+          </td>
+          <td>${site.dailyGift || ''}</td>
+          <td>${site.otherGift || ''}</td>
+          <td>${renderCooldown(site.cooldown)}</td>
+          <td>${site.operator || ''}</td>
+          <td>${site.country || ''}</td>
+        </tr>
+      `).join('');
+    }
+
+    function sortData(field) {
+      if (sortField === field) {
+        sortDir = sortDir === 'asc' ? 'desc' : sortDir === 'desc' ? null : 'asc';
+        if (!sortDir) sortField = null;
+      } else {
+        sortField = field;
+        sortDir = 'asc';
+      }
+
+      document.querySelectorAll('th').forEach(th => {
+        th.classList.remove('sorted');
+        th.querySelector('.sort-icon').textContent = '↕';
+      });
+
+      let sorted = [...sites];
+      if (sortField && sortDir) {
+        const th = document.querySelector(`th[data-sort="${sortField}"]`);
+        th.classList.add('sorted');
+        th.querySelector('.sort-icon').textContent = sortDir === 'asc' ? '↑' : '↓';
+
+        sorted.sort((a, b) => {
+          const aVal = (a[sortField] || '').toString().toLowerCase();
+          const bVal = (b[sortField] || '').toString().toLowerCase();
+          
+          if (sortField === 'tierRating') {
+            const aRank = tierOrder[aVal] ?? 99;
+            const bRank = tierOrder[bVal] ?? 99;
+            return sortDir === 'asc' ? aRank - bRank : bRank - aRank;
+          }
+          
+          return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        });
+      }
+      renderTable(sorted);
+    }
+
+    function submitCasino() {
+      const link = document.getElementById('referralLink').value.trim();
+      if (!link) {
+        alert('Please enter your referral link.');
+        return;
+      }
+      const mailtoLink = 'mailto:freemoneydaily@gmail.com?subject=Casino Submission&body=' + encodeURIComponent('Referral Link: ' + link);
+      window.location.href = mailtoLink;
+      document.getElementById('referralLink').value = '';
+    }
+
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+      th.addEventListener('click', () => sortData(th.dataset.sort));
+    });
+
+    // Initial sort by tier
+    sortData('tierRating');
+  </script>
+</body>
+</html>
