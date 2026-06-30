@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreeMoneyDaily.Online — Sweepstakes Casino Directory</title>
+  <meta name="description" content="An advantage player's ranked directory of 157 sweepstakes casinos with daily free Sweeps Coins, sorted by tier, cooldown and operator.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#F1F8F3; --card:#FFFFFF; --card2:#EFF6F1;
+      --ink:#16241B; --ink2:#566B5D; --muted:#869488;
+      --line:#E0EBE3; --line2:#CEDED3;
+      --accent:#0AA15A; --accent2:#06703D; --accent-soft:#E0F3E7;
+      --emerald:#0B6B43; --emerald2:#094E32;
+      --serif:'Fraunces',Georgia,'Times New Roman',serif;
+      --sans:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:var(--sans); background:var(--paper); color:var(--ink);
+      line-height:1.5; min-height:100vh; -webkit-font-smoothing:antialiased;
+    }
+    .container{max-width:1240px;margin:0 auto;padding:0 22px 64px;}
+    a{color:var(--accent2);text-decoration:none;}
+    a:hover{text-decoration:underline;}
+
+    /* ── Masthead (emerald magazine block) ── */
+    .masthead{background:var(--emerald);border-radius:18px;margin-top:16px;padding:20px 28px 22px;color:#EAF7EF;position:relative;overflow:hidden;}
+    .masthead::after{content:"";position:absolute;right:-50px;top:-50px;width:160px;height:160px;border-radius:50%;background:rgba(95,227,154,.12);}
+    .kicker{
+      font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+      color:#7FD7A4;margin-bottom:12px;position:relative;
+    }
+    .masthead h1{
+      font-family:var(--serif);font-optical-sizing:auto;
+      font-weight:600;font-size:clamp(1.9rem,4.6vw,2.9rem);line-height:1;
+      letter-spacing:-.02em;color:#FFFFFF;position:relative;
+    }
+    .masthead h1 em{font-style:italic;font-weight:500;color:#5FE39A;}
+    .masthead h1 .tld{font-family:var(--sans);font-size:.4em;font-weight:500;color:#9FE3BC;letter-spacing:0;}
+    .standfirst{
+      font-family:var(--serif);font-style:italic;font-size:clamp(1rem,2.2vw,1.25rem);
+      color:#C7EAD5;max-width:660px;margin-top:14px;line-height:1.45;position:relative;
+    }
+    .masthead-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px;position:relative;}
+    .updated{
+      font-size:12px;font-weight:500;color:#DFF3E8;
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+      padding:4px 12px;border-radius:999px;
+    }
+    .updated strong{color:#fff;font-weight:600;}
+
+    /* ── Bookmark hero button ── */
+    .bm-hero{display:flex;justify-content:center;margin:26px 0 8px;}
+    .bm-hero-btn{
+      display:inline-flex;align-items:center;gap:11px;cursor:pointer;
+      font-family:var(--sans);font-size:1.02rem;font-weight:600;letter-spacing:.005em;
+      color:#fff;background:var(--accent);border:none;border-radius:12px;
+      padding:15px 28px;box-shadow:0 6px 18px rgba(10,161,90,.28);
+      transition:transform .16s ease,box-shadow .16s ease,background .16s ease;
+    }
+    .bm-hero-btn:hover{transform:translateY(-2px);background:#08894C;box-shadow:0 10px 24px rgba(10,161,90,.36);}
+    .bm-hero-btn:active{transform:translateY(0);}
+    .bm-hero-btn svg{flex-shrink:0;}
+
+    /* ── Controls ── */
+    .controls{display:flex;flex-wrap:wrap;gap:11px;align-items:center;margin:22px 0 14px;}
+    .search-wrap{position:relative;flex:1;min-width:220px;}
+    .search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+    #searchBox{
+      width:100%;padding:11px 12px 11px 40px;font-family:inherit;font-size:14px;color:var(--ink);
+      background:var(--card);border:1px solid var(--line2);border-radius:10px;transition:border-color .15s,box-shadow .15s;
+    }
+    #searchBox:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+    .tier-filters{display:flex;flex-wrap:wrap;gap:6px;}
+    .tier-btn{
+      padding:7px 13px;border-radius:8px;border:1px solid var(--line2);background:var(--card);
+      font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink2);transition:all .15s;
+    }
+    .tier-btn:hover{border-color:var(--accent);color:var(--accent2);}
+    .tier-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+    .tier-btn.all-btn.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+    .cooldown-toggle{
+      display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);cursor:pointer;
+      padding:8px 13px;border-radius:8px;border:1px solid var(--line2);background:var(--card);
+      font-family:inherit;font-weight:500;white-space:nowrap;transition:all .15s;
+    }
+    .cooldown-toggle input{accent-color:var(--accent);cursor:pointer;}
+    .cooldown-toggle:hover{border-color:var(--accent);}
+    .row-count{font-size:13px;color:var(--ink2);margin:0 0 10px 2px;}
+    .row-count strong{color:var(--ink);font-weight:600;}
+    .row-count .mode-hint{color:var(--muted);font-weight:400;}
+
+    /* ── Table ── */
+    .table-wrap{border:1px solid var(--line2);border-radius:14px;background:var(--card);overflow:hidden;}
+    .scroll-x{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:13.5px;}
+    thead th{
+      position:sticky;top:0;z-index:6;background:var(--card2);
+      color:var(--ink2);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+      padding:12px 14px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--line2);
+      cursor:pointer;user-select:none;transition:color .15s,background .15s;
+    }
+    thead th:hover{color:var(--accent2);background:#F6EAD8;}
+    thead th .sort-icon{margin-left:5px;opacity:.35;font-size:10px;}
+    thead th.sorted{color:var(--accent2);}
+    thead th.sorted .sort-icon{opacity:1;}
+    tbody td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:middle;}
+    tbody tr:last-child td{border-bottom:none;}
+    .site-row{transition:background .13s ease,box-shadow .13s ease;}
+    .site-row:hover{background:#FFF7EA;box-shadow:inset 3px 0 0 var(--accent);}
+
+    /* ── Tier badge (circular) ── */
+    .tier-badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-width:30px;height:30px;padding:0 8px;border-radius:999px;
+      font-size:12.5px;font-weight:700;letter-spacing:.01em;line-height:1;font-family:var(--sans);
+    }
+    .tb-s{background:#06A35C;color:#fff;box-shadow:0 0 0 3px rgba(6,163,92,.20);}
+    .tb-a{background:#1AA94F;color:#fff;}
+    .tb-am{background:#49B645;color:#0e3a12;}
+    .tb-ap{background:#16A94F;color:#fff;}
+    .tb-bp{background:#84BE3C;color:#23380d;}
+    .tb-b{background:#AEBE38;color:#2d340f;}
+    .tb-bm{background:#C7B636;color:#34300d;}
+    .tb-cp{background:#DFA836;color:#43330a;}
+    .tb-c{background:#E2942F;color:#43300c;}
+    .tb-cm{background:#E37F2B;color:#fff;}
+    .tb-d{background:#DD6A29;color:#fff;}
+    .tb-dm{background:#D04F27;color:#fff;}
+    .tb-f{background:#C13A2E;color:#fff;}
+
+    /* ── Site cell ── */
+    .site-cell{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .favicon{width:17px;height:17px;border-radius:4px;object-fit:contain;flex-shrink:0;}
+    .site-name{font-weight:600;font-size:14.5px;color:var(--ink);}
+    .site-name:hover{color:var(--accent2);}
+    .mk{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;font-size:11px;font-weight:700;line-height:1;cursor:help;}
+    .mk-dep{background:rgba(29,158,117,.16);color:#0F6E56;}
+    .mk-wd{background:rgba(83,74,183,.15);color:#534AB7;}
+    .mk-reddit{background:none;border:none;padding:0;width:19px;height:19px;cursor:pointer;overflow:hidden;}
+    .mk-reddit img{width:19px;height:19px;display:block;border-radius:50%;}
+    .tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;letter-spacing:.03em;padding:2px 8px;border-radius:999px;text-transform:uppercase;line-height:1.5;white-space:nowrap;}
+    .tag-welcome{background:rgba(224,168,43,.18);color:#7E4D0F;}
+    .tag-promo{background:rgba(83,74,183,.14);color:#3F3699;}
+
+    /* ── Welcome offer ── */
+    .welcome{display:inline-block;font-size:12px;line-height:1.35;color:var(--accent2);font-weight:500;max-width:230px;}
+
+    /* ── Cooldown pill ── */
+    .cd{display:inline-block;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+    .cd-24{background:rgba(45,103,209,.12);color:#27599A;}
+    .cd-cal{background:rgba(199,138,43,.16);color:#8A5512;}
+    .cd-none{background:rgba(134,148,136,.18);color:#566B5D;}
+    .cd-other{background:var(--card2);color:var(--ink2);border:1px solid var(--line2);}
+
+    .c-op{color:var(--muted);font-size:12.5px;max-width:200px;}
+    .c-country{color:var(--ink2);font-size:12.5px;white-space:nowrap;}
+
+    /* ── Notes cell ── */
+    .note-chip{
+      display:flex;align-items:flex-start;gap:7px;text-align:left;cursor:pointer;
+      background:none;border:none;padding:0;font-family:inherit;max-width:280px;
+    }
+    .note-reddit{width:15px;height:15px;border-radius:50%;flex-shrink:0;margin-top:1px;opacity:.85;}
+    .note-text{
+      font-size:12px;line-height:1.4;color:var(--ink2);
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .note-chip:hover .note-text{color:var(--ink);}
+
+    /* ── Visit button ── */
+    .visit-btn{
+      display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
+      font-size:12.5px;font-weight:600;color:var(--accent2);
+      border:1px solid var(--line2);border-radius:8px;padding:6px 12px;background:var(--card);transition:all .14s;
+    }
+    .visit-btn:hover{text-decoration:none;background:var(--accent);color:#fff;border-color:var(--accent);}
+
+    /* ── Tier group header (magazine) ── */
+    .group-row td{background:var(--paper);padding:26px 14px 12px;border-bottom:2px solid var(--ink);}
+    .group-row:first-child td{padding-top:8px;}
+    .group-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
+    .group-letter{
+      font-family:var(--serif);font-style:italic;font-weight:600;
+      font-size:2.5rem;line-height:.9;letter-spacing:-.02em;
+    }
+    .gl-s{color:#0A8C50;} .gl-a{color:#1A9C4C;} .gl-am{color:#3F9F3C;} .gl-ap{color:#179C4C;}
+    .gl-bp{color:#6E9A28;} .gl-b{color:#8E9824;} .gl-bm{color:#9C8E20;}
+    .gl-cp{color:#B0801C;} .gl-c{color:#B06C1C;} .gl-cm{color:#B0581C;}
+    .gl-d{color:#A8481C;} .gl-dm{color:#9C3E1C;} .gl-f{color:#A82E26;}
+    .group-copy{
+      font-family:var(--serif);font-style:italic;font-size:1.06rem;line-height:1.45;
+      color:var(--ink);max-width:760px;flex:1;min-width:240px;
+    }
+
+    /* ── Untracked section ── */
+    .untracked{margin-top:30px;border:1px solid var(--line2);border-radius:14px;background:var(--card);overflow:hidden;}
+    .untracked > summary{
+      list-style:none;cursor:pointer;padding:18px 22px;display:flex;align-items:center;gap:12px;
+      font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--ink);user-select:none;
+    }
+    .untracked > summary::-webkit-details-marker{display:none;}
+    .untracked > summary .chev{margin-left:auto;transition:transform .2s;color:var(--muted);font-size:13px;font-family:var(--sans);font-style:normal;}
+    .untracked[open] > summary .chev{transform:rotate(180deg);}
+    .untracked > summary .u-count{font-family:var(--sans);font-style:normal;font-size:12px;font-weight:600;color:var(--ink2);background:var(--card2);border:1px solid var(--line2);padding:3px 10px;border-radius:999px;}
+    .untracked-note{padding:0 22px 14px;font-size:13px;color:var(--ink2);}
+
+    /* ── Hit counter ── */
+    .hit-counter{text-align:center;color:var(--muted);font-size:11px;margin:30px 0;}
+    .hit-counter a{color:var(--muted);}
+
+    /* ── Community section ── */
+    .community{
+      margin-top:40px;display:flex;gap:20px;align-items:flex-start;
+      background:var(--accent-soft);border:1px solid #CDE8D6;border-radius:16px;padding:26px 28px;
+    }
+    .community-icon{flex-shrink:0;width:46px;height:46px;border-radius:12px;background:#FF4500;display:flex;align-items:center;justify-content:center;}
+    .community-icon img{width:26px;height:26px;}
+    .community h2{font-family:var(--serif);font-weight:600;font-size:1.4rem;color:var(--accent2);margin-bottom:8px;}
+    .community p{color:var(--ink2);font-size:14px;line-height:1.6;max-width:680px;margin-bottom:16px;}
+    .community-btn{display:inline-flex;align-items:center;gap:8px;background:#FF4500;color:#fff;font-weight:600;font-size:14px;padding:10px 18px;border-radius:10px;transition:transform .15s,box-shadow .15s;}
+    .community-btn:hover{text-decoration:none;transform:translateY(-1px);box-shadow:0 6px 16px rgba(255,69,0,.3);color:#fff;}
+
+    /* ── Cooldown download section ── */
+    .cooldown-section{margin-top:34px;padding:30px;background:var(--card);border:1px solid var(--line2);border-radius:16px;}
+    .cooldown-section h2{text-align:center;font-family:var(--serif);font-weight:600;font-size:1.5rem;color:var(--ink);margin-bottom:6px;}
+    .cooldown-section .cd-subtitle{text-align:center;color:var(--ink2);font-size:.96rem;font-style:italic;font-family:var(--serif);margin-bottom:26px;}
+    .cd-btn-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:26px;}
+    .cd-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:.98rem;font-weight:600;padding:14px 26px;border-radius:11px;border:none;cursor:pointer;color:#fff;transition:transform .15s,box-shadow .15s;}
+    .cd-btn:active{transform:translateY(0)!important;}
+    .cd-btn-24h{background:var(--accent);box-shadow:0 4px 14px rgba(10,161,90,.28);}
+    .cd-btn-24h:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(10,161,90,.36);}
+    .cd-btn-cal{background:#2D67D1;box-shadow:0 4px 14px rgba(45,103,209,.28);}
+    .cd-btn-cal:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(45,103,209,.36);}
+    .cd-howto{background:var(--card2);border-radius:12px;padding:20px 24px;max-width:580px;margin:0 auto;border:1px solid var(--line2);}
+    .cd-howto h3{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:14px;text-align:center;}
+    .cd-step,.bm-step{display:flex;align-items:flex-start;gap:12px;font-size:.88rem;color:var(--ink2);margin-bottom:10px;}
+    .cd-step:last-child{margin-bottom:0;}
+    .cd-step-num,.bm-step-num{background:var(--accent);color:#fff;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;margin-top:1px;}
+    .cd-step code,.bm-step code{background:var(--card);padding:1px 6px;border-radius:5px;font-size:.82rem;color:var(--ink);border:1px solid var(--line2);}
+
+    /* ── Contact ── */
+    .contact{margin-top:36px;padding:30px;background:var(--accent-soft);border:1px solid #CDE8D6;border-radius:16px;text-align:center;}
+    .contact h2{font-family:var(--serif);font-weight:600;color:var(--accent2);font-size:1.5rem;margin-bottom:8px;}
+    .contact p{color:var(--ink2);margin-bottom:18px;max-width:520px;margin-left:auto;margin-right:auto;font-size:14px;}
+    .contact-form{display:flex;gap:12px;max-width:520px;margin:0 auto;flex-direction:column;}
+    .contact-form textarea{flex:1;padding:12px 15px;border-radius:9px;border:1px solid var(--line2);background:var(--card);color:var(--ink);resize:none;min-height:46px;font-family:inherit;font-size:14px;}
+    .contact-form textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+    .contact-form button{padding:12px 24px;background:var(--accent);border:none;border-radius:9px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:all .15s;}
+    .contact-form button:hover{background:#08894C;transform:translateY(-1px);}
+    @media(min-width:640px){.contact-form{flex-direction:row;}}
+
+    /* ── Modals ── */
+    .bm-modal-overlay{display:none;position:fixed;inset:0;background:rgba(42,32,23,.55);z-index:1000;align-items:center;justify-content:center;}
+    .bm-modal-overlay.open{display:flex;}
+    .bm-modal{background:var(--card);border-radius:18px;padding:32px;max-width:430px;width:90%;box-shadow:0 24px 60px rgba(42,32,23,.3);text-align:center;}
+    .bm-modal h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;color:var(--ink);margin-bottom:8px;}
+    .bm-modal p{color:var(--ink2);font-size:.95rem;margin-bottom:20px;}
+    .bm-steps{text-align:left;margin-bottom:24px;}
+    .bm-close{background:var(--card2);border:1px solid var(--line2);border-radius:9px;padding:10px 24px;font-size:.95rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:background .15s;font-family:inherit;}
+    .bm-close:hover{background:var(--line);}
+
+    /* ── Reddit popup ── */
+    .reddit-popup{display:none;position:fixed;z-index:2000;width:340px;background:var(--card);border-radius:13px;box-shadow:0 12px 36px rgba(42,32,23,.28);border:1px solid var(--line2);overflow:hidden;}
+    .reddit-popup.open{display:block;}
+    .reddit-popup-header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#FF4500;color:#fff;font-weight:600;font-size:13px;}
+    .reddit-popup-header img{width:20px;height:20px;border-radius:5px;}
+    .reddit-popup-close{margin-left:auto;background:none;border:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;padding:0 2px;}
+    .reddit-popup-site{padding:13px 16px 4px;font-weight:600;font-size:14px;color:var(--ink);font-family:var(--serif);font-style:italic;}
+    .reddit-popup-body{padding:4px 16px 14px;font-size:13px;line-height:1.55;color:var(--ink2);max-height:300px;overflow-y:auto;white-space:pre-line;}
+    .reddit-popup-footer{display:flex;align-items:center;gap:6px;padding:10px 16px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);}
+    .reddit-popup-footer img{width:13px;height:13px;opacity:.6;}
+
+    .empty-state{padding:40px;text-align:center;color:var(--muted);font-style:italic;font-family:var(--serif);}
+
+    /* ── Mobile cards ── */
+    @media(max-width:680px){
+      .scroll-x{overflow-x:visible;}
+      .table-wrap{border:none;background:transparent;border-radius:0;overflow:visible;}
+      table,thead,tbody,th,td,tr{display:block;}
+      thead{display:none;}
+      .site-row{background:var(--card);border:1px solid var(--line2);border-radius:13px;margin-bottom:11px;padding:13px 15px;}
+      .site-row:hover{box-shadow:none;background:var(--card);}
+      tbody td{border:none;padding:4px 0;display:flex;gap:10px;align-items:flex-start;}
+      tbody td::before{content:attr(data-label);font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);min-width:74px;padding-top:3px;flex-shrink:0;}
+      .c-welcome:empty,.c-notes:empty,.c-cool:empty,.c-op:empty,.c-country:empty{display:none;}
+      .group-row{display:block;}
+      .group-row td{display:block;padding:22px 2px 6px;border-bottom:none;}
+      .group-row td::before{display:none;}
+      .welcome,.note-chip{max-width:none;}
+      .community{flex-direction:column;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="masthead">
+      <div class="kicker">Daily free sweepstakes coins &middot; an advantage player's directory</div>
+      <h1>Free Money <em>Daily</em><span class="tld">.online</span></h1>
+      <div class="masthead-meta">
+        <span class="updated">Last updated <strong>June 2026</strong></span>
+        <span class="updated"><strong>157</strong> sites tracked</span>
+      </div>
+    </header>
+
+    <div class="bm-hero">
+      <button class="bm-hero-btn" onclick="downloadBookmarks()">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        Download my recommended sites as bookmarks
+      </button>
+    </div>
+
+    <div class="bm-modal-overlay" id="bmModal" onclick="closeBmModal(event)">
+      <div class="bm-modal">
+        <h2>Recommended sites downloaded</h2>
+        <p>Your top-rated sites (S, A, B+, B, B-) are in the file. Three quick steps to import into Chrome:</p>
+        <div class="bm-steps">
+          <div class="bm-step"><div class="bm-step-num">1</div><div>Open Chrome and click the <code>&#8942;</code> menu (top right)</div></div>
+          <div class="bm-step"><div class="bm-step-num">2</div><div>Go to <code>Bookmarks</code> &rarr; <code>Bookmark Manager</code></div></div>
+          <div class="bm-step"><div class="bm-step-num">3</div><div>Click <code>&#8942;</code> in Bookmark Manager &rarr; <code>Import bookmarks</code> &rarr; select the file</div></div>
+        </div>
+        <button class="bm-close" onclick="document.getElementById('bmModal').classList.remove('open')">Got it</button>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchBox" type="text" placeholder="Search sites, operators, countries&hellip;" oninput="applyFilters()">
+      </div>
+      <div class="tier-filters">
+        <button class="tier-btn all-btn active" data-tier="all" onclick="setTier(this)">All</button>
+        <button class="tier-btn" data-tier="s" onclick="setTier(this)">S</button>
+        <button class="tier-btn" data-tier="a" onclick="setTier(this)">A</button>
+        <button class="tier-btn" data-tier="b+" onclick="setTier(this)">B+</button>
+        <button class="tier-btn" data-tier="b" onclick="setTier(this)">B</button>
+        <button class="tier-btn" data-tier="b-" onclick="setTier(this)">B-</button>
+        <button class="tier-btn" data-tier="c" onclick="setTier(this)">C</button>
+        <button class="tier-btn" data-tier="d" onclick="setTier(this)">D</button>
+        <button class="tier-btn" data-tier="f" onclick="setTier(this)">F</button>
+      </div>
+      <label class="cooldown-toggle"><input type="checkbox" id="cdToggle" onchange="applyFilters()"> 24-hour only</label>
+    </div>
+    <div class="row-count" id="rowCount"></div>
+
+    <div class="table-wrap"><div class="scroll-x">
+      <table id="sitesTable">
+        <thead><tr>
+          <th data-sort="tierRating">Tier <span class="sort-icon">&#8597;</span></th>
+          <th data-sort="site">Site <span class="sort-icon">&#8597;</span></th>
+          <th class="th-notes">Notes</th>
+          <th data-sort="cooldown">Cooldown <span class="sort-icon">&#8597;</span></th>
+          <th data-sort="operator">Operator <span class="sort-icon">&#8597;</span></th>
+          <th data-sort="country">Country <span class="sort-icon">&#8597;</span></th>
+          <th>Visit</th>
+        </tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div></div>
+
+    <details class="untracked">
+      <summary>
+        Sites I'm not actively tracking right now
+        <span class="u-count" id="untrackedCount">0</span>
+        <span class="chev">&#9660; show</span>
+      </summary>
+      <div class="untracked-note">Dormant, not-yet-rated, or sites I've stopped collecting from. Here if you want them, out of the main flow.</div>
+      <div class="scroll-x"><table><tbody id="untrackedBody"></tbody></table></div>
+    </details>
+
+    <div class="hit-counter">
+      <div id="sfcgl6p1c3y8mwnprkea496mcwhu4u1w7sw"></div>
+      <script type="text/javascript" src="https://counter1.optistats.ovh/private/counter.js?c=gl6p1c3y8mwnprkea496mcwhu4u1w7sw&down=async" async></script>
+      <br><a href="https://www.freecounterstat.com">website hit counter</a>
+      <noscript><a href="https://www.freecounterstat.com" title="website hit counter"><img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=gl6p1c3y8mwnprkea496mcwhu4u1w7sw" border="0" alt="website hit counter"></a></noscript>
+    </div>
+
+    <div class="community">
+      <div class="community-icon"><img src="https://www.reddit.com/favicon.ico" alt="Reddit"></div>
+      <div>
+        <h2>Don't miss your daily free SC</h2>
+        <p>Bookmark <a href="https://www.reddit.com/r/SweepstakesChurning/" target="_blank" rel="noopener">r/SweepstakesChurning</a> and check it every evening. <a href="https://www.reddit.com/user/Soggy-Web-8057" target="_blank" rel="noopener">u/Soggy-Web-8057</a> does an incredible job aggregating the daily promotions for each site &mdash; free spins, bonus SC links, limited-time offers &mdash; in one place so you can collect them all in a couple of minutes. One of the most valuable resources in the community, and well worth checking nightly.</p>
+        <a class="community-btn" href="https://www.reddit.com/r/SweepstakesChurning/" target="_blank" rel="noopener"><img src="https://www.reddit.com/favicon.ico" alt="" style="width:16px;height:16px;"> Visit r/SweepstakesChurning</a>
+      </div>
+    </div>
+
+    <div class="cooldown-section">
+      <h2>Download your daily grind bookmarks</h2>
+      <p class="cd-subtitle">Open all your daily bonus pages in one click &mdash; sorted by cooldown type.</p>
+      <div class="cd-btn-row">
+        <button class="cd-btn cd-btn-24h" onclick="downloadCooldown('24h')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          24 hour cooldown bookmarks
+        </button>
+        <button class="cd-btn cd-btn-cal" onclick="downloadCooldown('cal')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Calendar day cooldown bookmarks
+        </button>
+      </div>
+      <div class="cd-howto">
+        <h3>How to use these bookmarks</h3>
+        <div class="cd-step"><div class="cd-step-num">1</div><div>Click a button above &mdash; your bookmarks file downloads instantly.</div></div>
+        <div class="cd-step"><div class="cd-step-num">2</div><div>In Chrome click <code>&#8942;</code> &rarr; <code>Bookmarks</code> &rarr; <code>Bookmark Manager</code></div></div>
+        <div class="cd-step"><div class="cd-step-num">3</div><div>In Bookmark Manager click <code>&#8942;</code> &rarr; <code>Import bookmarks</code> &rarr; select the file</div></div>
+        <div class="cd-step"><div class="cd-step-num">4</div><div>Open the new folder and <strong>right-click &rarr; Open all</strong> to launch every daily bonus page at once.</div></div>
+      </div>
+    </div>
+
+    <div class="bm-modal-overlay" id="cdModal24h" onclick="closeCdModal('cdModal24h', event)">
+      <div class="bm-modal">
+        <h2>24 hour bookmarks downloaded</h2>
+        <p>These sites reset every <strong>24 hours</strong> from when you last claimed.</p>
+        <div class="bm-steps">
+          <div class="bm-step"><div class="bm-step-num">1</div><div>Open Chrome <code>&#8942;</code> &rarr; <code>Bookmarks</code> &rarr; <code>Bookmark Manager</code></div></div>
+          <div class="bm-step"><div class="bm-step-num">2</div><div>Click <code>&#8942;</code> &rarr; <code>Import bookmarks</code> &rarr; select the file</div></div>
+          <div class="bm-step"><div class="bm-step-num">3</div><div>Right-click the folder &rarr; <code>Open all</code> to launch them daily.</div></div>
+        </div>
+        <button class="bm-close" onclick="document.getElementById('cdModal24h').classList.remove('open')">Got it</button>
+      </div>
+    </div>
+    <div class="bm-modal-overlay" id="cdModalCal" onclick="closeCdModal('cdModalCal', event)">
+      <div class="bm-modal">
+        <h2>Calendar day bookmarks downloaded</h2>
+        <p>These sites reset at <strong>midnight</strong> each calendar day &mdash; claim them every morning.</p>
+        <div class="bm-steps">
+          <div class="bm-step"><div class="bm-step-num">1</div><div>Open Chrome <code>&#8942;</code> &rarr; <code>Bookmarks</code> &rarr; <code>Bookmark Manager</code></div></div>
+          <div class="bm-step"><div class="bm-step-num">2</div><div>Click <code>&#8942;</code> &rarr; <code>Import bookmarks</code> &rarr; select the file</div></div>
+          <div class="bm-step"><div class="bm-step-num">3</div><div>Right-click the folder &rarr; <code>Open all</code> every morning.</div></div>
+        </div>
+        <button class="bm-close" onclick="document.getElementById('cdModalCal').classList.remove('open')">Got it</button>
+      </div>
+    </div>
+
+    <div class="contact">
+      <h2>Submit a casino</h2>
+      <p>Is there a casino with a daily bonus missing from my list? Send it to me and I'll feature your referral link for at least 7 days.</p>
+      <div class="contact-form">
+        <textarea id="referralLink" placeholder="Paste your referral link here&hellip;"></textarea>
+        <button onclick="submitCasino()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="reddit-popup" id="redditPopup">
+    <div class="reddit-popup-header">
+      <img src="https://www.reddit.com/favicon.ico" alt="Reddit">
+      Community note by <a href="https://www.reddit.com/user/Soggy-Web-8057" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">u/Soggy-Web-8057</a>
+      <button class="reddit-popup-close" onclick="closeRedditPopup()">&times;</button>
+    </div>
+    <div class="reddit-popup-site" id="redditPopupSite"></div>
+    <div class="reddit-popup-body" id="redditPopupBody"></div>
+    <div class="reddit-popup-footer">
+      <img src="https://www.reddit.com/favicon.ico" alt="">
+      Source: <a href="https://www.reddit.com/r/SweepstakesChurning/" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:underline;">r/SweepstakesChurning</a>
+    </div>
+  </div>
+
+  <script>
+    const sites = [{"id":100,"site":"Modo","siteUrl":"https://modo.us?referralCode=O9GK31","tierRating":"A","cooldown":"24 hour","operator":"ARB Gaming LLC. USA","country":"USA","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Used to be 1 SC per day now around 0.3 SC per day daily bonus. However, they do have occasional decent (20-33% off) deals and a few 1 SC freebies a week along with good playthrough options and very fast redemptions."},{"id":101,"site":"Myprize","siteUrl":"https://myprize.us/invite/player8545847874443","tierRating":"A","cooldown":"24 hour","operator":"Private Equity","country":"USA","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":""},{"id":102,"site":"Zulacasino","siteUrl":"https://www.zulacasino.com/signup/f2f59e17-7940-431d-a2c9-042de71ca74e","tierRating":"A","cooldown":"24 hour","operator":"SCPS LLC.","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"They give around 1 SC per day (with the last ones giving a bit less). Their playthrough options aren’t great but they occasionally give away free spins. Redemptions are pretty quick."},{"id":103,"site":"Americanluck","siteUrl":"https://americanluck.com/signup/c1ae5ef6-708e-4069-b3f0-1872f495f89b","tierRating":"A","cooldown":"calendar day","operator":"SGSE LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"They give around 1 SC per day (with the last ones giving a bit less). Their playthrough options aren’t great but they occasionally give away free spins. Redemptions are pretty quick."},{"id":104,"site":"Jackpota","siteUrl":"https://www.jackpota.com/?r=235566939","tierRating":"A","cooldown":"24 hour","operator":"SILVER SOCIAL OPERATIONS LIMITED","country":"Isle Of Man","welcomeOffer":"Best Offer: 80,000 GC, 42 SC & 77 Free SC Spins","hasDeposited":true,"hasWithdrawn":true,"soggyNote":""},{"id":105,"site":"FortuneWins","siteUrl":"https://www.fortunecoins.com/signup/d764f020-c302-4b10-80a8-e79ec07af8bb","tierRating":"A","cooldown":"calendar day","operator":"Social Gaming LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"They give around 1 SC per day (with the last ones giving a bit less). Their playthrough options aren’t great but they occasionally give away free spins. Redemptions are pretty quick."},{"id":106,"site":"Luckparty","siteUrl":"https://luckparty.com/signup/67978a2c-2010-4c76-b273-415f0b01c086","tierRating":"A","cooldown":"calendar day","operator":"SPSE LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false,"soggyNote":"They give around 1 SC per day (with the last ones giving a bit less). Their playthrough options aren’t great but they occasionally give away free spins. Redemptions are pretty quick."},{"id":107,"site":"Pulszbingo","siteUrl":"www.pulszbingo.com/?invited_by=zeqaq5","tierRating":"A","cooldown":"24 hour","operator":"Yellow Social Interactive Limited","country":"Gibraltar","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Pulsz is definitely the superior site with a better login bonus (~0.75 SC vs 0.4 SC) and more frequent promotions. However, they both occasionally give freebies, decent deals and have, IMO, the best (fastest) blackjack game of any site out there."},{"id":108,"site":"Pulsz","siteUrl":"www.pulsz.com/?invited_by=r1bx51","tierRating":"A","cooldown":"24 hour","operator":"Yellow Social Interactive Limited","country":"Gibraltar","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Pulsz is definitely the superior site with a better login bonus (~0.75 SC vs 0.4 SC) and more frequent promotions. However, they both occasionally give freebies, decent deals and have, IMO, the best (fastest) blackjack game of any site out there."},{"id":109,"site":"WinBonanza","siteUrl":"https://winbonanza.com/register/6a214e32-baa1-4eb4-8b83-2dd1e5fddc7c","tierRating":"A","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":110,"site":"Spinpals","siteUrl":"https://www.spinpals.com/?referralcode=454f4852-7400-4e82-acee-1b87abf760af","tierRating":"A","cooldown":"24 hour","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"The rare site that has gotten better and better over time. It has a daily bonus with weekly extras in addition to maybe the most generous daily wheel spin and frequently has profitable daily missions. IMO SpinPals and Global Poker are the most underrated sites out there but they are both absolutely elite."},{"id":111,"site":"Punt","siteUrl":"https://punt.com/c/94bs6y","tierRating":"A","cooldown":"24 hour","operator":"Gold Coin Group LLC","country":"USA (Texas)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":112,"site":"Spree","siteUrl":"https://spree.com/?r=1489020","tierRating":"A","cooldown":"24 hour","operator":"lay Spree Ltd","country":"Isle Of Man","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Still has the same 0.3 SC/day login bonus but I was recently restricted from the Sit & Spin game which was my main source of profit from the site. This site was solidly in my top 10 but now is on the edge of being cut. On the brightside it now has plinko for playthrough."},{"id":113,"site":"Megabonanza","siteUrl":"https://www.megabonanza.com/?r=299676068","tierRating":"A","cooldown":"24 hour","operator":"LuminaryPlay Operations Limited","country":"Isle Of Man","welcomeOffer":"150% First Purchase Offer: Up to 600,000 GC and 303 SC Free","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":114,"site":"Ace","siteUrl":"https://www.ace.com/?r=3d00e5ce%2F25682649","tierRating":"A","cooldown":"24 hour","operator":"Full Stop Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":115,"site":"Goldenheartsgames","siteUrl":"https://www.goldenheartsgames.com/referral/QOX9LD19FE","tierRating":"A","cooldown":"calendar day","operator":"Golden Hearts Games Inc","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"Nothing exciting with a ~0.4 SC daily bonus with blackjack as a playthrough option and fast redemptions. What makes this site a fixture is the RevU integration. You can earn SC doing things like signing up for other sites, bank accounts, meal subscriptions, etc. As such this site should be the first that a new player should sign up for."},{"id":116,"site":"Luckyhands","siteUrl":"https://luckyhands.com/sign-up?code=8d151d9e-2379-459f-a0bf-65953cfcbd66","tierRating":"A","cooldown":"24 hour","operator":"Liberty Crest Rewards LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":117,"site":"Spindoo","siteUrl":"https://www.spindoo.us/?r=29077658","tierRating":"A","cooldown":"24 hour","operator":"PMSG Media Limited","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":118,"site":"Hush","siteUrl":"https://www.hushcasino.com/","tierRating":"A","cooldown":"","operator":"Reality Forge Labs, Inc","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":119,"site":"Yaycasino","siteUrl":"https://www.yaycasino.com/signup/934e9443-5427-4e80-adcb-df0eeba20030","tierRating":"A","cooldown":"24 hour","operator":"Social Gaming LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"They give around 1 SC per day (with the last ones giving a bit less). Their playthrough options aren’t great but they occasionally give away free spins. Redemptions are pretty quick."},{"id":120,"site":"CoinWizardGames","siteUrl":"https://www.coinwizardgames.com/referral/OPXEBF8I58","tierRating":"A","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":121,"site":"Baba","siteUrl":"https://play.babacasino.com/#/?referral_id=259cba9daadafcac647c97ff844084a7&inv_referral=true&fb_source=invite","tierRating":"A","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":122,"site":"Chanced","siteUrl":"https://chanced.com/c/gqa8cj","tierRating":"A","cooldown":"24 hour","operator":"Gold Coin Group LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":123,"site":"Spinblitz","siteUrl":"https://www.spinblitz.com/lp/raf?r=6b59fe37%2F1928995749","tierRating":"A+","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":124,"site":"Play Fame","siteUrl":"https://www.playfame.com/lp/raf?r=1918888570","tierRating":"A+","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":125,"site":"Mcluck","siteUrl":"https://www.mcluck.com/lp/raf?r=2abc6ee2%2F1918947044 https://www.mcluck.com/lp/raf?r=2abc6ee2%2F1918947044&p=cw77tr","tierRating":"A+","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"3 Purchase Offer: 227,000 GC + 107.5 SC","hasDeposited":true,"hasWithdrawn":false,"soggyNote":""},{"id":126,"site":"Hellomillions","siteUrl":"https://www.hellomillions.com/lp/raf?r=9495cead%2F1918933896","tierRating":"A+","cooldown":"24 hour","operator":"B-Two Operations Limited","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":127,"site":"Wowvegas","siteUrl":"https://www.wowvegas.com/?raf=9814348","tierRating":"A+","cooldown":"24 hour","operator":"MW SERVICES LIMITED","country":"Gibraltar","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Login bonus is basically 0 but they do have daily giveaway posts on Facebook for 1 SC each. They also started doing sales every Friday for 50% extra in addition to free spins. Good playthrough options (Diamonds) as well! Their sales are not as frequent or generous as they were in 2024 but we’ve made some progress recently. A tip: Check transaction history to check your playthrough progress."},{"id":128,"site":"Gogogold","siteUrl":"https://gogogoldwin.com/?qid=xia0bh1b","tierRating":"B","cooldown":"calendar day","operator":"Crestline Game Ltd.","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":129,"site":"Zunado","siteUrl":"https://app.zunado.com/invite/piSIAwLgM0wO","tierRating":"B","cooldown":"24 hour","operator":"CT-Tech North America LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":130,"site":"Goodvibes","siteUrl":"https://goodvibescasino.com/","tierRating":"B","cooldown":"24 hour","operator":"LGT Development LLC","country":"USA (Nevada","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":131,"site":"Thewinzone","siteUrl":"https://www.thewinzone.com/","tierRating":"B","cooldown":"","operator":"playSWEEPS, LLC,","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":132,"site":"Shuffle.us","siteUrl":"https://shuffle.us?r=R5KLVVV3MI","tierRating":"B","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":133,"site":"High5","siteUrl":"https://high5casino.com/gc?adId=INV001%3Ajasnlcas","tierRating":"B","cooldown":"","operator":"High 5 Games, LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":134,"site":"Rollingriches","siteUrl":"https://www.rollingriches.com/","tierRating":"B","cooldown":"calendar day","operator":"Rolling Riches Ltd","country":"British Virgin Islands","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":135,"site":"Coinfrenzy","siteUrl":"https://coinfrenzy.com/?referralcode=jasnlcas","tierRating":"B","cooldown":"24 hour","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":136,"site":"Legendz","siteUrl":"https://www.legendz.com/?referred_by_id=439082","tierRating":"B-","cooldown":"24 hour","operator":"Platinum Panther Ltd","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":137,"site":"Lunalandcasino","siteUrl":"https://lunalandcasino.com/?inviter=355a8bd0-c618-5b1c-838a-4d59c42e299e&t=1f3b2199-b648-4c91-9160-c5719f51816f&utm_source=referral&utm_medium=iaf_copy_link&utm_campaign=invite","tierRating":"B+","cooldown":"24 hour","operator":"Parana Plays LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":""},{"id":138,"site":"Spinquest","siteUrl":"spinquest.com/?u=XFKO17W","tierRating":"B+","cooldown":"24 hour","operator":"Social Gaming Room LLC","country":"USA (California)","welcomeOffer":"200% Extra: 300,000 Gold Coins + 30 SC Free","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"The good: 1 SC Daily only takes a second to claim and they have 98% RTP Plinko. The bad: You need 20X playthrough to redeem. This makes your effective profit $0.6/day which is pretty decent."},{"id":139,"site":"Gains","siteUrl":"https://gains.com/?ref=jasnlcas","tierRating":"B+","cooldown":"24 hour","operator":"GamerGains Labs, Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":140,"site":"Sixty6","siteUrl":"https://sixty6.com/?ref=5F89C2E802632B68&modal=register","tierRating":"B+","cooldown":"24 hour","operator":"Kinetix Ventures","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":141,"site":"Bitsky","siteUrl":"https://www.bitsky.bet/affiliate-invite/?affiliate_code=MzQxMjI=","tierRating":"B+","cooldown":"24 hour","operator":"ABAR LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":142,"site":"Zoot","siteUrl":"https://getzoot.us/?referralCode=ZOOTwithUSER138639","tierRating":"B+","cooldown":"calendar day","operator":"Enigma Lake Holdings, Inc.","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":143,"site":"Rubysweeps","siteUrl":"https://play.rubysweeps.com/","tierRating":"C","cooldown":"calendar day","operator":"Ruby Play Network Limited.","country":"New Zealand?","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":144,"site":"Moozi","siteUrl":"https://moozi.com/signup?referral_code=7304516009","tierRating":"C","cooldown":"24 hour","operator":"Moshy Gaming LLC (US)","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"Only if you are Silver VIP+. At Silver VIP you get 0.5 SC/day at login + weekly sales up to 30% extra. You also get an additional 0.2 SC/day for several days around holidays."},{"id":145,"site":"Kingprize","siteUrl":"https://kingprize.com?ref=14836","tierRating":"C","cooldown":"24 hour","operator":"OMENTERPRISEUSA INC","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":146,"site":"Theboss","siteUrl":"https://www.theboss.casino?referralcode=2d0210b4-ff50-4686-abf3-a8281be9f862","tierRating":"C","cooldown":"","operator":"Boss Development Ltd","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":147,"site":"Bankrolla","siteUrl":"https://bankrolla.com/","tierRating":"C","cooldown":"24 hour","operator":"Epic Play Holding Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":148,"site":"Casino.Click","siteUrl":"https://casino.click/?modal=iqs-sign-up&ReferenceCode=255736&AffiliatePlatformId=200","tierRating":"C","cooldown":"calendar day","operator":"eponymous company","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":149,"site":"Spinfinite","siteUrl":"https://www.spinfinite.com/","tierRating":"C","cooldown":"calendar day","operator":"Forever Winning LL","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":150,"site":"DaraCasino","siteUrl":"https://daracasino.com/signup?refferalCode=sRi5tjF8zh","tierRating":"C","cooldown":"24 hour","operator":"Gateway Guardian Administrators, LLC","country":"USA (Virginia)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":151,"site":"Clubspoker","siteUrl":"https://play.clubs.poker/?referralCode=185280","tierRating":"C","cooldown":"calendar day","operator":"KHK Games","country":"USA (Pennsylvania)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":152,"site":"Goldtreasure","siteUrl":"https://goldtreasurecasino.com?referrer=5ycBr7gR","tierRating":"C","cooldown":"calendar day","operator":"Miracle Studio 8","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":153,"site":"Rolla","siteUrl":"https://www.rolla.com/?raf=215093","tierRating":"C","cooldown":"calendar day","operator":"MW SERVICES LIMITED","country":"Gibraltar","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"WoW Vegas Sister site without the daily freebie posts. You get 0.2 SC daily login bonus and once a week 1 SC facebook post, free spins and 50% extra sale makes them a solid site in my book."},{"id":154,"site":"Coinz","siteUrl":"https://coinz.us/?referral_code=cdd483bd694e7bbc","tierRating":"C","cooldown":"calendar day","operator":"Nickle Tech LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":155,"site":"Coinsroyale","siteUrl":"https://www.coinsroyale.com/","tierRating":"C","cooldown":"","operator":"NiyaSG LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":156,"site":"Sheesh","siteUrl":"https://sheeshcasino.com?ref=zdi0ndb","tierRating":"C","cooldown":"calendar day","operator":"P8D Interactive Inc","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":157,"site":"Megaspinz","siteUrl":"https://www.megaspinz.com","tierRating":"C","cooldown":"calendar day","operator":"Petique Labs LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":158,"site":"Sweepspot","siteUrl":"https://sweepspot.com/","tierRating":"C","cooldown":"calendar day","operator":"Riverano Ltd","country":"Cyprus","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":159,"site":"Sweetsweeps","siteUrl":"https://sweetsweeps.com?referralCode=REFOTA1MQ==","tierRating":"C","cooldown":"calendar day","operator":"Solutions Limited","country":"Gibraltar","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":160,"site":"Spinsaga","siteUrl":"https://play.spinsagacasino.com/?ref=69960&campaign=referFriend","tierRating":"C","cooldown":"24 hour","operator":"Spin Saga Inc","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":161,"site":"Sweepluxe","siteUrl":"https://sweepluxe.com/sign-up?referralCode=D3FWaD","tierRating":"C","cooldown":"calendar day","operator":"Sweepluxe Corporation","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":162,"site":"Luckyslots","siteUrl":"https://luckyslots.us?raf=c0F3VFBWUWM4ejJseHB5cWxSTHg=","tierRating":"C","cooldown":"24 hour","operator":"Sweet Innovation LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":163,"site":"Sweepsroyal","siteUrl":"https://sweepsroyal.com/?ref=r_jasnlcas","tierRating":"C","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"10,000 GC & 30 Free SC: 200% Extra","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":164,"site":"Speedsweeps","siteUrl":"https://speedsweeps.com/?ref=r_jasnlcas","tierRating":"C","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":165,"site":"Richsweeps","siteUrl":"https://richsweeps.com/?ref=r_jasnlcas","tierRating":"C","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":166,"site":"Dimesweeps","siteUrl":"https://dimesweeps.com/?ref=r_jasnlcas","tierRating":"C","cooldown":"24 hour","operator":"WW Funcrafters JWA LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":167,"site":"Withyotta","siteUrl":"https://join.withyotta.com/FMDO","tierRating":"C","cooldown":"24 hour","operator":"Yotta Technologies","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":168,"site":"Chipnwin","siteUrl":"https://chipnwin.com/?earn=tql5NbEv","tierRating":"C","cooldown":"calendar day","operator":"Сhipnwin LLC","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":169,"site":"happyending","siteUrl":"https://happyending.com/ref/player89270","tierRating":"C","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":170,"site":"Bangcoins","siteUrl":"https://bangcoins.com/?ref=r_jasnlcas","tierRating":"C","cooldown":"24 hour","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":171,"site":"Freespin","siteUrl":"https://freespin.com/","tierRating":"C","cooldown":"calendar day","operator":"","country":"Curacao","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":172,"site":"Roxymoxy","siteUrl":"https://roxymoxy.com/home?invite=387ccf766a","tierRating":"C-","cooldown":"calendar day","operator":"Rainforest Ltd","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false,"soggyNote":""},{"id":173,"site":"Lucklake","siteUrl":"app.lucklake.com?c=WZRm78BGqb","tierRating":"C-","cooldown":"24 hour","operator":"Rad Software","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":174,"site":"Cashoomo","siteUrl":"https://cashoomo.com/?referralCode=WDPQFGL98VBA","tierRating":"C-","cooldown":"24 hour","operator":"Green Candy Solutions, Inc","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":false,"soggyNote":""},{"id":175,"site":"Smilescasino","siteUrl":"https://smilescasino.com/promotions/refer-a-friend/U2FsdGVkX1%2FMN49%2BCrK6fAPr95fEqFL6Bzt0cIFzIWc%3D","tierRating":"C-","cooldown":"calendar day","operator":"10 Ten Gaming LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":176,"site":"Bigpirate","siteUrl":"https://bigpirate.com/","tierRating":"C-","cooldown":"calendar day","operator":"AFFIGO LIMITED","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":177,"site":"Bigshotgames","siteUrl":"https://www.bigshotgames.com/","tierRating":"C-","cooldown":"calendar day","operator":"Big Shot Games Interactive, LLC","country":"USA (Minnesota)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":178,"site":"Wildhorsebucks","siteUrl":"https://wildhorsebucks.com/","tierRating":"C-","cooldown":"24 hour","operator":"The Outcome Optimizers Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":179,"site":"Jumbo88","siteUrl":"https://www.jumbo88.com/signup?referralCode=ann55t","tierRating":"C-","cooldown":"24 hour","operator":"InspireCore Technologies Inc","country":"Canada","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":180,"site":"Sweepjungle","siteUrl":"https://sweepjungle.com/?ref=FD075260614D0031&modal=register","tierRating":"C-","cooldown":"calendar day","operator":"Kinetix Ventures","country":"USA (Delaware)","welcomeOffer":"Up to 645k Gold Coins + 57 SC","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":181,"site":"Luckybitsvegas","siteUrl":"https://luckybitsvegas.com/gc?adId=INV001%3Ajasnlcas","tierRating":"C-","cooldown":"","operator":"LBV Social LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":182,"site":"Sweeper","siteUrl":"https://sweepercasino.com/register?referralcode=4cb933c6-50d1-484c-b811-0223afeb4e73","tierRating":"C-","cooldown":"","operator":"Lucky Hands LLC","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":183,"site":"Lucky.Me","siteUrl":"https://www.lucky.me/","tierRating":"C-","cooldown":"calendar day","operator":"Lucky Me Ventures LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":184,"site":"Luckyzino","siteUrl":"https://luckyzino.com/","tierRating":"C-","cooldown":"","operator":"Luckyzino LTD","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":185,"site":"Scoop","siteUrl":"https://scoop.com/?ref=r_jasnlcas","tierRating":"C-","cooldown":"24 hour","operator":"My Scoop LLC","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":186,"site":"Cidercasino","siteUrl":"https://cidercasino.onelink.me/QfGN/oio1bede?c=EZU4TS7M","tierRating":"C-","cooldown":"calendar day","operator":"Mystic Mirror Studio Limited. Aevorix Play Inc","country":"USA (Colorado)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":187,"site":"Daruma","siteUrl":"https://daruma.us/","tierRating":"C-","cooldown":"calendar day","operator":"No Days Off Enterprises","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":188,"site":"Havanafortuna","siteUrl":"https://havanafortuna.com/en/sign-up?promo=jasnlcas","tierRating":"C-","cooldown":"24 hour","operator":"Social Interactive Promotions LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":189,"site":"Wandando","siteUrl":"https://wandando.com/","tierRating":"C-","cooldown":"24 hour","operator":"Wandando Inc.","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":190,"site":"Winpanda","siteUrl":"https://www.winpanda.com?referral_code=7d1773c3-1a1d-4a04-adf4-70ce207c913e","tierRating":"C-","cooldown":"calendar day","operator":"Winpanda LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":191,"site":"Sweeplasvegas","siteUrl":"https://www.sweeplasvegas.com/signup?ref=jasnlcas_26021","tierRating":"C+","cooldown":"24 hour","operator":"Digital Entertainment Development LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":192,"site":"Luckycanoe","siteUrl":"app.luckycanoe.com?c=e3kea2nkdp","tierRating":"C+","cooldown":"24 hour","operator":"Rad Software","country":"Isle Of Man","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":193,"site":"Epicsweep","siteUrl":"https://epicsweep.us?ref=18235_jasnlcas","tierRating":"D","cooldown":"24 hour","operator":"Epic Social Play Inc","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":194,"site":"Acorn","siteUrl":"https://wap.acornfun.com/#/dashboard/welcome?channel=Refer&campaign=Refer&invite_code=DANYNJW3","tierRating":"D","cooldown":"","operator":"Jupiter Studio Limited","country":"USA (New Jersey)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":195,"site":"Themoneyfactory","siteUrl":"https://www.themoneyfactory.com/referral?referralcode=6ce398f2-14ab-40ec-a484-5e15f0bcc469","tierRating":"D","cooldown":"24 hour","operator":"Money Factory LLC (us)","country":"USA","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":196,"site":"Lavishluck","siteUrl":"https://invite.lavishluck.net/8dID/0cyelj9k?c=CYP9ZCXU","tierRating":"D","cooldown":"24 hour","operator":"PRUDENT OWL LIMITED (Hong Kong)","country":"Hong Kong","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":197,"site":"Jefe","siteUrl":"https://www.jefebet.com/","tierRating":"D-","cooldown":"","operator":"FSG Digital, Inc","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":198,"site":"Vegasway","siteUrl":"http://vegasway.com/?invited_by=SLFTJA","tierRating":"D-","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":199,"site":"Sweepshark","siteUrl":"http://sweepshark.com/?invited_by=R23988","tierRating":"D-","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":200,"site":"Sweepico","siteUrl":"http://sweepico.com/?invited_by=P64IPT","tierRating":"D-","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Idaho)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":201,"site":"Scarletsands","siteUrl":"http://scarletsands.com/?invited_by=YN8TG5","tierRating":"D-","cooldown":"24 hour","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":202,"site":"Playtana","siteUrl":"http://playtana.com/?invited_by=2CCEPB","tierRating":"D-","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":203,"site":"Mrgoodwin","siteUrl":"https://mrgoodwin.com/?invited_by=RYJWYA","tierRating":"D-","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":204,"site":"Jackpotrabbit","siteUrl":"https://jackpotrabbit.com/?invited_by=XF17NH","tierRating":"D-","cooldown":"calendar day","operator":"UTech Solutions LLC","country":"USA (Idaho)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":205,"site":"Firesevens","siteUrl":"http://firesevens.com/?invited_by=DBK655","tierRating":"D-","cooldown":"24 hour","operator":"UTech Solutions LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":206,"site":"Taofortune","siteUrl":"https://taofortune.com/?invited_by=69M854","tierRating":"F","cooldown":"24 hour","operator":"A1 Development","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":207,"site":"Fortunewheelz","siteUrl":"http://fortunewheelz.com/?invited_by=OAJZXR","tierRating":"F","cooldown":"calendar day","operator":"A1 Development","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":208,"site":"StormRush","siteUrl":"http://stormrush.com/?invited_by=40KLOW","tierRating":"F","cooldown":"calendar day","operator":"A1 Development LLC","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":209,"site":"Nolimitcoins","siteUrl":"https://nolimitcoins.com/?invited_by=QWVLSC","tierRating":"F","cooldown":"calendar day","operator":"A1 Development LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":210,"site":"Funzcity","siteUrl":"http://funzcity.com/?invited_by=2A7QZ4","tierRating":"F","cooldown":"calendar day","operator":"A1 Development LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":211,"site":"Funrize","siteUrl":"https://funrize.com/?invited_by=SB8SFB","tierRating":"F","cooldown":"24 hour","operator":"A1 Development LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":212,"site":"Goldmachine","siteUrl":"https://www.goldmachine.com?referral_code=8c1b6591-8e0f-415c-910a-840e7ba02e59","tierRating":"F","cooldown":"24 hour","operator":"Gold Machine LLC","country":"USA (Texas)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":213,"site":"Nioplay","siteUrl":"http://nioplay.net/?referralcode=a2b29dfc-04e1-4123-b04f-9e46e5206888","tierRating":"F","cooldown":"","operator":"Nio Consolidated, LLC","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":214,"site":"Grandvault","siteUrl":"https://grandvaultcasino.com/games/home?referral=MAP7kjJvEwz8VEUCZ4p30cUkkMe2W3O8pII+E0xgWuk=","tierRating":"not collecting","cooldown":"24 hour","operator":"247 Entertainment LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":215,"site":"Spinsamerica","siteUrl":"https://spinsamerica.com/games/home?referral=aNroUGqPn5eAmarsTrP7V5iSL9ESov/PE9uFroZBgWA=","tierRating":"not collecting","cooldown":"24 hour","operator":"4Play Gaming","country":"India","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":216,"site":"RollRoyale","siteUrl":"https://rollroyale.net/play?ref=1ZM9EJ","tierRating":"not collecting","cooldown":"no daily","operator":"ARB Services,","country":"Estonia","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":217,"site":"LuckyBird","siteUrl":"https://luckybird.vip/?c=c_jasnlcas","tierRating":"not collecting","cooldown":"24 hour","operator":"Atlantic Management, B.V","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":218,"site":"Rainbows-End","siteUrl":"https://www.rainbows-end.com/","tierRating":"not collecting","cooldown":"calendar day","operator":"Big Sky Gaming, LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":219,"site":"Playbracco","siteUrl":"https://playbracco.com/","tierRating":"not collecting","cooldown":"no daily","operator":"Bracco LLC","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":220,"site":"Carnivalciti","siteUrl":"https://www.carnivalciti.com/","tierRating":"not collecting","cooldown":"24 hour","operator":"Citi Media Group","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":221,"site":"Americana","siteUrl":"https://www.americanacasino.com/?aff=17429","tierRating":"not collecting","cooldown":"calendar day","operator":"Dream Gaming Entertainment Inc","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":222,"site":"Sorceryreels","siteUrl":"https://game.sorceryreels.com?raf=Z9FFBX08","tierRating":"not collecting","cooldown":"24 hour","operator":"Fish Bear Studio Limited","country":"Hong Kong","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":223,"site":"Sidepot","siteUrl":"https://sidepot.us","tierRating":"not collecting","cooldown":"no daily","operator":"Fliff Inc","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":224,"site":"Luckyrush","siteUrl":"https://luckyrush.io/register?referral=lvc5vc8","tierRating":"not collecting","cooldown":"","operator":"High Rollers of St. Lucie, Inc","country":"USA (Florida)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":225,"site":"Lionsdengames","siteUrl":"https://www.lionsdengames.net/U-DMTDHM1Y","tierRating":"not collecting","cooldown":"no daily","operator":"J&K Studios, Inc","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":226,"site":"Cosmoslots","siteUrl":"https://www.cosmoslots.com/register?invitecode=CZLKTF","tierRating":"not collecting","cooldown":"","operator":"LGB Industries","country":"USA / India","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":227,"site":"Lunarluck","siteUrl":"https://lunarluck.us/","tierRating":"not collecting","cooldown":"calendar day","operator":"Mixxxed Bag LLC","country":"USA (Nevada)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":228,"site":"Onyxodds","siteUrl":"https://onyxodds.com/?promo_code=UZ456003","tierRating":"not collecting","cooldown":"","operator":"Onyx Games LLC","country":"USA (New York)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":229,"site":"Vpbet","siteUrl":"https://vpbet2.us?c=in2ITP8","tierRating":"not collecting","cooldown":"","operator":"Platinum; Technology N.V","country":"Curacao","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":230,"site":"Goldslips","siteUrl":"https://play.goldslips.com/","tierRating":"not collecting","cooldown":"","operator":"Rubystone Ventures LLC","country":"USA (California)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":231,"site":"Moonspin","siteUrl":"https://moonspin.us/","tierRating":"Not collecting","cooldown":"24 hour","operator":"Solar Bloom LLC","country":"USA (Wyoming)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":232,"site":"lott-o-fun","siteUrl":"https://www.lott-o-fun.net?referral_code=5be5b11a-d54a-4a4e-a3b8-689244bd094e","tierRating":"Not collecting","cooldown":"calendar day","operator":"Texas Rag and Supply LLC","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":233,"site":"pickem","siteUrl":"https://play.pickem.social/","tierRating":"not collecting","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":234,"site":"Real Prize","siteUrl":"https://realprize.com/refer/1406441","tierRating":"S","cooldown":"24 hour","operator":"RealPlay Tech inc","country":"USA (Delaware)","welcomeOffer":"Up to 125 SC FREE + 625K Golden Coins + 1250 VIP Points","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Recently upgraded their daily login bonus to about $0.75/day which is already very competitive but additionally they typically have multiple free spins or free SC links every day which makes them some of the best free SC sites out there. Their sales are very good for new people. But your access to those deals seems to be throttled after you’ve made a redemption or two. They have excellent playthrough options including my personal choice of Oasis Poker. The only downside is their redemptions can take nearly a month. However, they have been like this for ages and I consider them highly trustworthy - no cause for concern IMO."},{"id":235,"site":"Lonestar","siteUrl":"https://lonestarcasino.com/refer/725187","tierRating":"S","cooldown":"24 hour","operator":"Realplay Tech Inc.","country":"USA (Delaware)","welcomeOffer":"500k GC, 105 Free SC & 1000 VIP Points","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Recently upgraded their daily login bonus to about $0.75/day which is already very competitive but additionally they typically have multiple free spins or free SC links every day which makes them some of the best free SC sites out there. Their sales are very good for new people. But your access to those deals seems to be throttled after you’ve made a redemption or two. They have excellent playthrough options including my personal choice of Oasis Poker. The only downside is their redemptions can take nearly a month. However, they have been like this for ages and I consider them highly trustworthy - no cause for concern IMO."},{"id":236,"site":"Sportzino","siteUrl":"https://sportzino.com/signup/28720ac7-1758-40bd-b63f-d2a74e4cea8b","tierRating":"S","cooldown":"24 hour","operator":"SSPS LLC","country":"USA (Delaware)","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":true,"soggyNote":"They give around 1 SC per day (with the last ones giving a bit less). Their playthrough options aren’t great but they occasionally give away free spins. Redemptions are pretty quick."},{"id":237,"site":"CrownCoinsCasino","siteUrl":"https://crowncoinscasino.com/?utm_campaign=69ae3557-b391-4929-8903-096ef348faf6&utm_source=friends","tierRating":"S","cooldown":"calendar day","operator":"Sunflower Limited","country":"USA (Virginia)","welcomeOffer":"200% More Coins on First Purchase: 1.5 Million Crown Coins & 75 SC","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Frequent freebies plus an additional 3.5 SC/day login bonus at Gold VIP means you get around $100 in free play a month. Sales are rarely good for me anymore and their missions and events seem harder to complete and lower reward than previously. In addition their playthrough RTP is pretty poor (~94% for roulette X and Mines). But none of that matters when they are giving away nearly 3X the free SC as any other site. If you are not yet on this site I would HIGHLY recommend you sign up via Inbox Dollars. By doing so you can earn an INSANE $1,091.85 through hitting various goals (all of which I have hit over the 2 years I’ve played there)."},{"id":238,"site":"Stake","siteUrl":"stake.us/?c=V6Jnn5lx","tierRating":"S","cooldown":"24 hour","operator":"Sweepsteaks Limited","country":"Cyprus","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"Quick 1 SC per day by logging in with no playthrough requirements. They are crypto only for withdrawals. If you don’t already have a crypto wallet I have had no issues using Coinbase for withdrawals."},{"id":239,"site":"Luckylandslots","siteUrl":"https://luckylandslots.com","tierRating":"S","cooldown":"24 hour","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"All owned by VGW these sites have blackjack (99+%) playthrough options. The LuckyLand sites typically give 1 SC per day and a couple excellent (50% off) deals per month. In addition, you can earn exceptional deals like 30SC for $.99 once a month on each site by leveling up their monthly resetting VIP (See Here). Global Poker only offers ~.5 SC per day for login but has the best daily missions of any site out there giving you an expected 4 SC or so of profit per day. Doing these missions can be quite volatile so expect to lose 15 SC on some days and gain 40 SC on others. These sites, along with Chumba also offer electronic AMOE submissions to boost your balance by 5 SC per site for ~5-10 minutes each of writing."},{"id":240,"site":"Luckylandcasino","siteUrl":"https://luckylandcasino.com/","tierRating":"S","cooldown":"24 hour","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":true,"hasWithdrawn":true,"soggyNote":"All owned by VGW these sites have blackjack (99+%) playthrough options. The LuckyLand sites typically give 1 SC per day and a couple excellent (50% off) deals per month. In addition, you can earn exceptional deals like 30SC for $.99 once a month on each site by leveling up their monthly resetting VIP (See Here). Global Poker only offers ~.5 SC per day for login but has the best daily missions of any site out there giving you an expected 4 SC or so of profit per day. Doing these missions can be quite volatile so expect to lose 15 SC on some days and gain 40 SC on others. These sites, along with Chumba also offer electronic AMOE submissions to boost your balance by 5 SC per site for ~5-10 minutes each of writing."},{"id":241,"site":"Globalpoker","siteUrl":"https://play.globalpoker.com/register?referral=8vz58Q2V","tierRating":"S","cooldown":"calendar day","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":"All owned by VGW these sites have blackjack (99+%) playthrough options. The LuckyLand sites typically give 1 SC per day and a couple excellent (50% off) deals per month. In addition, you can earn exceptional deals like 30SC for $.99 once a month on each site by leveling up their monthly resetting VIP (See Here). Global Poker only offers ~.5 SC per day for login but has the best daily missions of any site out there giving you an expected 4 SC or so of profit per day. Doing these missions can be quite volatile so expect to lose 15 SC on some days and gain 40 SC on others. These sites, along with Chumba also offer electronic AMOE submissions to boost your balance by 5 SC per site for ~5-10 minutes each of writing."},{"id":242,"site":"Chumbacasino","siteUrl":"https://www.chumbacasino.com/","tierRating":"S","cooldown":"24 hour","operator":"VGW Games Limited","country":"Malta","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":true,"soggyNote":""},{"id":243,"site":"Coolspin","siteUrl":"https://game.coolspinslot.com/","tierRating":"TBD","cooldown":"","operator":"ETERNAL BOOM LIMITED","country":"Hong Kong","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":244,"site":"Kickr","siteUrl":"https://kickr.com/signup/pb5a5tw1","tierRating":"","cooldown":"24 hour","operator":"Kickr Games Pty Ltd","country":"Australia","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":245,"site":"ThrillCoins","siteUrl":"https://thrillcoins.com//?ref=r_jasnlcas","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":246,"site":"WinEra","siteUrl":"https://winera.us?referralCode=02AwBu#signup","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":247,"site":"LuckyOne.us","siteUrl":"https://luckyone.us?referralCode=","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":248,"site":"TurboStakes","siteUrl":"https://app.turbostakes.com/?ref=8V4HKfNx","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":249,"site":"Zumo","siteUrl":"https://zumo.us/?ref=E9A9AD59CB25379A&modal=register","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":250,"site":"LuckXpress","siteUrl":"https://www.luckxpress.com/signup?ref=xjaydoggie_44909","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":251,"site":"SweepStars.us","siteUrl":"https://sweepstars.us/?earn=7TfYIUW1","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":252,"site":"NewLuck","siteUrl":"https://newluck.net?invitecode=bHtTb6UhmRXRx0gMoiLg9_rBY-EcozB2mVocynycBKfD0_ZNpuhHzyOlLxWZgfqE","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":253,"site":"JackpotDaily","siteUrl":"http://www.jackpotdaily.com/?affiliateCode=referral&referralCode=tvg8249","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":254,"site":"Capyspin","siteUrl":"https://www.capyspin.us/?cs=11fd","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":255,"site":"SweepBetz","siteUrl":"https://www.sweepbetz.com?referral_code=a21c570a-9f93-4e6f-a237-12028379864d","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""},{"id":256,"site":"jackroyals","siteUrl":"https://jackroyals.com/?ref=JASN4IDL","tierRating":"","cooldown":"","operator":"","country":"","welcomeOffer":"","hasDeposited":false,"hasWithdrawn":false,"soggyNote":""}];
+
+    const tierOrder = { s:0, "a+":0.5, a:1, "a-":1.5, "b+":2, b:2.5, "b-":3, "c+":3.5, c:4, "c-":4.5, d:5, "d-":5.5, f:6 };
+    const TIER_COPY = {
+      "s":"Must sign up.",
+      "a+":"Great daily collections right now, and a great deposit bonus, 3 deposits in a row!",
+      "a":"You also must sign up. I know if I say ‘must sign up’ I have to keep it to the best of the best, but these are still the best.",
+      "a-":"",
+      "b+":"Actually probably the best too. You shouldn’t be worried about these.",
+      "b":"Actually probably just as good as the rest, but just isn’t a top-tier known brand.",
+      "b-":"",
+      "c+":"I’m getting rewards but they’re not enough to ever cash out without a deposit, most likely.",
+      "c":"I’m getting rewards but they’re not enough to ever cash out without a deposit, most likely.",
+      "c-":"I’m annoyed by either not getting very much rewards or making me do too much for a very small reward.",
+      "d":"I probably stopped collecting altogether.",
+      "d-":"I was banned with no explanation.",
+      "f":"I was banned from all A1 Development and UTech Solutions sites for cashing out of one site, and was not awarded my cashout or any of the funds on any of their sites, with no explanation."
+    };
+
+    const tierKey = t => (t || "").trim().toLowerCase();
+    const isTracked = t => Object.prototype.hasOwnProperty.call(tierOrder, tierKey(t));
+    const tierClass = k => "tb-" + k.replace("+", "p").replace("-", "m");
+    const tierGlClass = k => "gl-" + k.replace("+", "p").replace("-", "m");
+    const esc = x => (x == null ? "" : String(x)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    // Welcome Offer column hidden until populated with real data. Flip to true to restore it.
+    const SHOW_WELCOME = false;
+    const COLS = SHOW_WELCOME ? 8 : 7;   // group-header / empty-state colspan
+    const SOGGY_SUMMARY = {"modo":"Daily bonus has shrunk to ~0.3 SC, but occasional 20-33% deals and very fast redemptions keep it worth holding.","zulacasino":"Blazesoft network site: about 1 SC/day with fast redemptions and occasional free spins, though playthrough options are weak.","americanluck":"Blazesoft network site: about 1 SC/day with fast redemptions and occasional free spins, though playthrough options are weak.","fortunewins":"Blazesoft network site: about 1 SC/day with fast redemptions and occasional free spins, though playthrough options are weak.","luckparty":"Blazesoft network site: about 1 SC/day with fast redemptions and occasional free spins, though playthrough options are weak.","yaycasino":"Blazesoft network site: about 1 SC/day with fast redemptions and occasional free spins, though playthrough options are weak.","sportzino":"Blazesoft network site: about 1 SC/day with fast redemptions and occasional free spins, though playthrough options are weak.","pulsz":"Frequent freebies and arguably the fastest blackjack anywhere; Pulsz proper has the bigger ~0.75 SC daily login bonus.","pulszbingo":"Sister to Pulsz with the same freebies and fast blackjack, but a smaller ~0.4 SC daily login bonus.","spinpals":"Quietly elite and still improving - generous daily wheel, weekly extras and often-profitable daily missions.","spree":"Still 0.3 SC/day, but a recent Sit & Spin restriction knocked it from his top 10 toward being cut.","goldenheartsgames":"Modest ~0.4 SC daily, but RevU offers (earn SC for signups, bank accounts, subscriptions) make it the first site a newcomer should join.","wowvegas":"Login bonus is basically zero, but daily Facebook 1 SC posts plus Friday 50% sales and free spins make it worthwhile.","spinquest":"Quick 1 SC daily and 98% RTP plinko, but 20x playthrough drags effective value down to about $0.60/day.","moozi":"Only pays off at Silver VIP+, where it's 0.5 SC/day plus weekly sales up to 30% extra.","rolla":"WoW Vegas's quieter sister site - 0.2 SC daily plus a weekly 1 SC post, free spins and a 50% sale make it solid.","real prize":"Among the best free-SC sites - ~0.75 SC/day plus daily free spins and SC links; redemptions are slow (~a month) but trustworthy.","lonestar":"RealPlay sister of Real Prize - ~0.75 SC/day plus daily free spins and SC links, with slow but trustworthy redemptions.","crowncoinscasino":"Gives nearly 3x the free SC of any site (~$100/month at Gold VIP); sign up via Inbox Dollars to stack large bonus goals.","stake":"Quick 1 SC/day with no playthrough; withdrawals are crypto-only, and Coinbase works fine if you lack a wallet.","luckylandslots":"VGW site with 99%+ blackjack playthrough - about 1 SC/day plus monthly 50% deals and a 30 SC for $0.99 VIP perk.","luckylandcasino":"VGW site with 99%+ blackjack playthrough - about 1 SC/day plus monthly 50% deals and a 30 SC for $0.99 VIP perk.","globalpoker":"VGW site with the best daily missions out there (~4 SC/day expected but volatile) and 99%+ blackjack playthrough."};
+    const SITE_TAGS = {"modo":["welcome","promos"],"myprize":["welcome"],"luckparty":["welcome"],"pulsz":["welcome","promos"],"spree":["welcome"],"luckyhands":["welcome"],"spinblitz":["welcome"],"play fame":["welcome"],"mcluck":["welcome"],"hellomillions":["welcome"],"real prize":["welcome","promos"],"lonestar":["welcome","promos"],"sportzino":["welcome"],"crowncoinscasino":["welcome","promos"],"luckylandslots":["promos"],"luckylandcasino":["promos"],"chumbacasino":["welcome"]};
+
+    const soggyNotes = {};
+    sites.forEach(s => { if (s.soggyNote) soggyNotes[s.id] = { site: s.site, note: s.soggyNote }; });
+
+    let activeTier = "all";
+    let sortField = null;   // null = grouped by tier (default)
+    let sortDir = "asc";
+
+    function getFavicon(url) {
+      try { const d = new URL(url).hostname;
+        return '<img class="favicon" src="https://www.google.com/s2/favicons?domain=' + d + '&sz=32" alt="" onerror="this.style.display=\'none\'">';
+      } catch (e) { return ""; }
+    }
+    function tierBadge(t) {
+      const k = tierKey(t), label = (t || "").trim().toUpperCase();
+      if (!label) return "";
+      return '<span class="tier-badge ' + tierClass(k) + '">' + label + "</span>";
+    }
+    function cooldownPill(cd) {
+      const l = (cd || "").trim().toLowerCase();
+      if (l === "24 hour" || l === "24 hours") return '<span class="cd cd-24">24 hour</span>';
+      if (l === "calendar day") return '<span class="cd cd-cal">calendar day</span>';
+      if (l === "no daily") return '<span class="cd cd-none">no daily</span>';
+      return cd ? '<span class="cd cd-other">' + esc(cd) + "</span>" : "";
+    }
+    function noteSummary(s) {
+      const k = (s.site || "").trim().toLowerCase();
+      if (SOGGY_SUMMARY[k]) return SOGGY_SUMMARY[k];
+      if (s.soggyNote) { const m = s.soggyNote.split(". ")[0].trim(); return m.length > 170 ? m.slice(0, 167) + "…" : m; }
+      return "";
+    }
+    function notesCell(s) {
+      if (!s.soggyNote) return "";
+      return '<button class="note-chip" data-soggy-id="' + s.id + '" onclick="showRedditNote(event,this)" title="u/Soggy-Web-8057 — click for the full note">' +
+        '<img class="note-reddit" src="https://www.reddit.com/favicon.ico" alt="Reddit">' +
+        '<span class="note-text">' + esc(noteSummary(s)) + "</span></button>";
+    }
+    function tagPills(s) {
+      const t = SITE_TAGS[(s.site || "").trim().toLowerCase()];
+      if (!t) return "";
+      return t.map(x => x === "welcome"
+        ? '<span class="tag tag-welcome" title="Attractive welcome bonus">welcome bonus</span>'
+        : '<span class="tag tag-promo" title="Attractive ongoing promos">promos</span>').join("");
+    }
+    function buildRow(s) {
+      return '<tr class="site-row">' +
+        '<td class="c-tier" data-label="Tier">' + tierBadge(s.tierRating) + "</td>" +
+        '<td class="c-site" data-label="Site"><div class="site-cell">' +
+          getFavicon(s.siteUrl) +
+          '<a class="site-name" href="' + esc(s.siteUrl) + '" target="_blank" rel="noopener">' + esc(s.site) + "</a>" +
+          (s.hasDeposited ? '<span class="mk mk-dep" title="I have personally deposited here">$</span>' : "") +
+          (s.hasWithdrawn ? '<span class="mk mk-wd" title="I have personally withdrawn from here">✓</span>' : "") +
+          tagPills(s) +
+        "</div></td>" +
+        (SHOW_WELCOME ? '<td class="c-welcome" data-label="Welcome">' + (s.welcomeOffer ? '<span class="welcome">' + esc(s.welcomeOffer) + "</span>" : "") + "</td>" : "") +
+        '<td class="c-notes" data-label="Notes">' + notesCell(s) + "</td>" +
+        '<td class="c-cool" data-label="Cooldown">' + cooldownPill(s.cooldown) + "</td>" +
+        '<td class="c-op" data-label="Operator">' + esc(s.operator) + "</td>" +
+        '<td class="c-country" data-label="Country">' + esc(s.country) + "</td>" +
+        '<td class="c-visit" data-label="Visit">' + (s.siteUrl ? '<a class="visit-btn" href="' + esc(s.siteUrl) + '" target="_blank" rel="noopener">Visit <span aria-hidden="true">↗</span></a>' : "") + "</td>" +
+        "</tr>";
+    }
+    function groupHeader(k) {
+      const label = k.toUpperCase(), copy = TIER_COPY[k] || "";
+      return '<tr class="group-row"><td colspan="' + COLS + '"><div class="group-head">' +
+        '<span class="group-letter ' + tierGlClass(k) + '">' + label + "</span>" +
+        (copy ? '<p class="group-copy">' + esc(copy) + "</p>" : "") +
+        "</div></td></tr>";
+    }
+
+    function passesFilters(s) {
+      const q = (document.getElementById("searchBox").value || "").toLowerCase();
+      const cdOnly = document.getElementById("cdToggle").checked;
+      if (activeTier !== "all") {
+        const st = tierKey(s.tierRating);
+        if (activeTier === "a") { if (!(st === "a" || st === "a+" || st === "a-")) return false; }
+        else if (activeTier === "c") { if (!(st === "c" || st === "c+" || st === "c-")) return false; }
+        else if (activeTier === "d") { if (!(st === "d" || st === "d-")) return false; }
+        else if (st !== activeTier) return false;
+      }
+      if (q) {
+        const hay = [s.site, s.operator, s.country, s.tierRating, s.welcomeOffer, s.soggyNote].map(x => (x || "").toLowerCase()).join(" ");
+        if (!hay.includes(q)) return false;
+      }
+      if (cdOnly && !(s.cooldown || "").toLowerCase().includes("24")) return false;
+      return true;
+    }
+
+    function applyFilters() {
+      const tracked = sites.filter(s => isTracked(s.tierRating) && passesFilters(s));
+      const tbody = document.getElementById("tableBody");
+      let html = "", n = 0;
+
+      if (sortField) {
+        const sorted = [...tracked].sort((a, b) => {
+          const av = (a[sortField] || "").toString().toLowerCase();
+          const bv = (b[sortField] || "").toString().toLowerCase();
+          return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
+        });
+        html = sorted.map(buildRow).join("");
+        n = sorted.length;
+      } else {
+        Object.keys(tierOrder).forEach(k => {
+          const grp = tracked.filter(s => tierKey(s.tierRating) === k);
+          if (!grp.length) return;
+          html += groupHeader(k) + grp.map(buildRow).join("");
+          n += grp.length;
+        });
+      }
+      tbody.innerHTML = html || '<tr><td colspan="' + COLS + '" class="empty-state">No sites match your filters.</td></tr>';
+
+      const modeHint = sortField ? "sorted by " + sortField : "grouped by tier";
+      document.getElementById("rowCount").innerHTML =
+        "Showing <strong>" + n + "</strong> of <strong>" + sites.length + "</strong> sites <span class=\"mode-hint\">&middot; " + modeHint + "</span>";
+    }
+
+    function setTier(btn) {
+      activeTier = btn.dataset.tier;
+      document.querySelectorAll(".tier-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      applyFilters();
+    }
+
+    function sortBy(field) {
+      const headers = document.querySelectorAll("th[data-sort]");
+      if (field === "tierRating") {
+        sortField = null; sortDir = "asc";
+      } else if (sortField === field) {
+        if (sortDir === "asc") sortDir = "desc";
+        else { sortField = null; sortDir = "asc"; }
+      } else {
+        sortField = field; sortDir = "asc";
+      }
+      headers.forEach(th => {
+        th.classList.remove("sorted");
+        const ic = th.querySelector(".sort-icon"); if (ic) ic.innerHTML = "&#8597;";
+      });
+      const activeField = sortField || "tierRating";
+      const th = document.querySelector('th[data-sort="' + activeField + '"]');
+      if (th) {
+        th.classList.add("sorted");
+        const ic = th.querySelector(".sort-icon");
+        if (ic) ic.innerHTML = sortField ? (sortDir === "asc" ? "&#8593;" : "&#8595;") : "&#9638;";
+      }
+      applyFilters();
+    }
+
+    function buildUntracked() {
+      const list = sites.filter(s => !isTracked(s.tierRating)).sort((a, b) => a.site.localeCompare(b.site));
+      document.getElementById("untrackedBody").innerHTML = list.map(buildRow).join("");
+      document.getElementById("untrackedCount").textContent = list.length;
+    }
+
+    function submitCasino() {
+      const link = document.getElementById("referralLink").value.trim();
+      if (!link) { alert("Please enter your referral link."); return; }
+      window.location.href = "mailto:freemoneydaily@gmail.com?subject=Casino Submission&body=" + encodeURIComponent("Referral Link: " + link);
+      document.getElementById("referralLink").value = "";
+    }
+
+    function downloadBookmarks() {
+      const tierRank = { s:1, "a+":2, a:3, "a-":4, "b+":5, b:6, "b-":7 };
+      const tierLabel = { s:"S", "a+":"A+", a:"A", "a-":"A-", "b+":"B+", b:"B", "b-":"B-" };
+      const filtered = sites
+        .filter(s => tierRank.hasOwnProperty(tierKey(s.tierRating)))
+        .sort((a, b) => {
+          const ra = tierRank[tierKey(a.tierRating)], rb = tierRank[tierKey(b.tierRating)];
+          return ra !== rb ? ra - rb : a.site.localeCompare(b.site);
+        });
+      const lines = [
+        "<!DOCTYPE NETSCAPE-Bookmark-file-1>",
+        '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">',
+        "<TITLE>Bookmarks</TITLE>", "<H1>Bookmarks</H1>", "<DL><p>",
+        "    <DT><H3>FreeMoneyDaily - Recommended Sites</H3>", "    <DL><p>"
+      ];
+      filtered.forEach(s => {
+        if (s.siteUrl && s.site) {
+          const label = tierLabel[tierKey(s.tierRating)] || s.tierRating;
+          const name = ("[" + label + "] - " + s.site).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const url = s.siteUrl.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+          lines.push('        <DT><A HREF="' + url + '">' + name + "</A>");
+        }
+      });
+      lines.push("    </DL><p>", "</DL>");
+      const blob = new Blob([lines.join("\n")], { type: "text/html" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "FreeMoneyDaily_Recommended_Bookmarks.html";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      document.getElementById("bmModal").classList.add("open");
+    }
+    function closeBmModal(e) {
+      if (e.target === document.getElementById("bmModal")) document.getElementById("bmModal").classList.remove("open");
+    }
+
+    const cooldownLinks = {"24h":[["McLuck","https://www.mcluck.com/home?r=2abc6ee2%2F1918947044"],["Lone Star Casino","https://lonestarcasino.com/#"],["Spree Slots","https://spree.com/slots"],["Play Fame","https://www.playfame.com/gold-coins"],["Hello Millions","https://www.hellomillions.com/gold-coins"],["Lucky.me Promotions","https://www.lucky.me/promotions#"],["Spin Quest Lobby","https://spinquest.com/casino/lobby"],["Jackpota","https://www.jackpota.com/gold-coins"],["Mega Bonanza","https://www.megabonanza.com/gold-coins"],["Crown Coins Casino","https://crowncoinscasino.com/"],["Yotta","https://members.withyotta.com/"],["Luna Land Casino Rewards","https://lunalandcasino.com/rewards"],["The Money Factory","https://www.themoneyfactory.com/"],["Moozi Lobby","https://moozi.com/lobby"],["Lucky Hands","https://luckyhands.com/"],["Speed Sweeps","https://speedsweeps.com/"],["Pulsz","https://www.pulsz.com/home"],["Pulsz Bingo","https://www.pulszbingo.com/home"],["Real Prize","https://realprize.com/#"],["Ace","https://www.ace.com/gold-coins"],["Sixty6 Daily Refill","https://sixty6.com/?fortune=open&modal=dailyRefill"],["Spin Saga Promotions","https://play.spinsagacasino.com/all-promotions"],["Spin Blitz","https://www.spinblitz.com/"],["Punt","https://punt.com/"],["Chanced Bonus","https://chanced.com/?page=bonus&tab=bank"],["Stake.us Daily Bonus","https://stake.us/?tab=dailyBonus&currency=btc&modal=wallet"],["Cashoomo Bonuses","https://cashoomo.com/profile/bonuses"],["Gains","https://gains.com/"],["Wild Horse Bucks","https://wildhorsebucks.com/"],["Jumbo88 Daily Rewards","https://www.jumbo88.com/daily-rewards"],["Lucky Canoe","https://app.luckycanoe.com/profile"],["Bitsky","https://www.bitsky.bet/"],["Havana Fortuna","https://havanafortuna.com/en"],["Good Vibes Casino","https://goodvibescasino.com/home/"],["Spindoo","https://www.spindoo.us/gold-coins"],["Lucky Land Slots","https://luckylandslots.com/"],["Lucky Land Casino","https://play.luckylandcasino.com/"],["Sweep Las Vegas Spin Wheel","https://www.sweeplasvegas.com/lobby?modal=spinWheel"],["Luck Lake","https://app.lucklake.com/profile"],["Rich Sweeps Promotions","https://richsweeps.com/promotions"],["King Prize Spin Wheel","https://www.kingprize.com/spin-wheel"],["Epic Sweep","https://epicsweep.us/home"],["Dime Sweeps Promotions","https://dimesweeps.com/promotions"],["Sweeps Royal Promotions","https://sweepsroyal.com/promotions"],["Bankrolla","https://bankrolla.com/welcome-package"],["Wandando","https://wandando.com/"],["Sweep Luxe Daily Rewards","https://sweepluxe.com/daily-rewards"],["The Win Zone Lobby","https://www.thewinzone.com/lobby"],["Spin Saga Casino","https://play.spinsagacasino.com/"],["Scoop Promotions","https://scoop.com/promotions"],["Spin Pals Daily Bonus","https://www.spinpals.com/user/reward/daily-bonus"],["Hush Casino","https://www.hushcasino.com/"],["Ruby Sweeps","https://play.rubysweeps.com/"],["Sweeper Casino Spin Wheel","https://www.sweepercasino.com/spin-wheel"],["Clubs Poker","https://play.clubspoker.com/"],["The Boss","https://www.theboss.us/"]],"cal":[["Sixty6","https://sixty6.com/?fortune=open"],["Modo","http://modo.us/"],["Global Poker","https://play.globalpoker.com/"],["Rolling Riches","https://www.rollingriches.com/get-coins"],["Spinfinite","https://www.spinfinite.com/welcome"],["Gold Treasure Casino","https://goldtreasurecasino.com/lobby"],["Rolla Promotions","https://www.rolla.com/promotions"],["Lavish Luck","https://game.lavishluck.net/"],["Sportzino Lobby","https://sportzino.com/lobby"],["Fortune Coins Lobby","https://www.fortunecoins.com/lobby"],["Zula Casino Lobby","https://www.zulacasino.com/lobby"],["Chumba Casino Lobby","https://lobby.chumbacasino.com/"],["Sheesh Casino Daily Bonus","https://sheeshcasino.com/daily-bonus"],["Casino Click","https://casino.click/"],["Sweep Luxe","https://sweepluxe.com/account/documents"],["Roxy Moxy Lobby","https://roxymoxy.com/lobby"],["Golden Hearts Games Lobby","https://www.goldenheartsgames.com/lobby"],["Coinz","https://coinz.us/"],["Win Panda Promotions","https://www.winpanda.com/promotions"],["Get Zoot","https://getzoot.us/catalogue?gameCategory=All"],["Sweep Jungle","https://sweepjungle.com/"],["Daruma","https://daruma.us/game/masked-treasures"],["Mega Spinz Promotions","https://www.megaspinz.com/promotions/"],["Luck Party Lobby","https://luckparty.com/lobby"],["American Luck Lobby","https://americanluck.com/lobby"],["Big Pirate","https://bigpirate.com/en/"],["Free Spin Promotions","https://freespin.com/promotions"],["Chip N Win","https://chipnwin.com/store/features"],["Cider Casino","https://game.cidercasino.com/"],["Gogo Goldwin Rewards","https://gogogoldwin.com/rewards/"],["Lucky.me","https://www.lucky.me/welcome/"],["Big Shot Games Promotions","https://www.bigshotgames.com/promotions/"],["Happy Ending","https://happyending.com/"],["Sweepstake AI","https://www.sweepstake.ai/"],["My Prize","https://myprize.us/"],["Yay Casino Lobby","https://www.yaycasino.com/lobby"],["Cool Spin","https://game.coolspinslot.com/"],["Coins Royale Daily Bonus","https://www.coinsroyale.com/en/promotion/daily-bonus"],["High 5 Casino","https://fun.high5casino.com/gc/"],["Lucky Bits Vegas","https://fun.luckybitsvegas.com/gc/"],["Clubs Poker","https://play.clubspoker.com/"]]};
+
+    function downloadCooldown(type) {
+      const isHour = type === "24h";
+      const folder = isHour ? "24 Hour Cooldown Bookmarks" : "Calendar Day Cooldown Bookmarks";
+      const filename = isHour ? "24Hour_Cooldown_Bookmarks.html" : "CalendarDay_Cooldown_Bookmarks.html";
+      const modalId = isHour ? "cdModal24h" : "cdModalCal";
+      const rows = cooldownLinks[type].map(p => {
+        const sn = p[0].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const su = p[1].replace(/&/g, "&amp;");
+        return '        <DT><A HREF="' + su + '">' + sn + "</A>";
+      }).join("\n");
+      const content = [
+        "<!DOCTYPE NETSCAPE-Bookmark-file-1>",
+        '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">',
+        "<DL><p>", "    <DT><H3>" + folder + "</H3>", "    <DL><p>", rows, "    </DL><p>", "</DL>"
+      ].join("\n");
+      const blob = new Blob([content], { type: "text/html" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      document.getElementById(modalId).classList.add("open");
+    }
+    function closeCdModal(id, e) {
+      if (e.target === document.getElementById(id)) document.getElementById(id).classList.remove("open");
+    }
+
+    function showRedditNote(e, btn) {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.soggyId, 10);
+      const data = soggyNotes[id];
+      if (!data) return;
+      const popup = document.getElementById("redditPopup");
+      document.getElementById("redditPopupSite").textContent = data.site;
+      document.getElementById("redditPopupBody").textContent = data.note;
+      const pw = 340, ph = 360;
+      popup.style.left = Math.max(12, Math.min(e.clientX + 12, window.innerWidth - pw - 16)) + "px";
+      popup.style.top = Math.max(12, Math.min(e.clientY + 12, window.innerHeight - ph - 16)) + "px";
+      popup.classList.add("open");
+      setTimeout(() => document.addEventListener("click", outsideRedditClick), 0);
+    }
+    function outsideRedditClick(e) {
+      const popup = document.getElementById("redditPopup");
+      if (!popup.contains(e.target)) closeRedditPopup();
+    }
+    function closeRedditPopup() {
+      document.getElementById("redditPopup").classList.remove("open");
+      document.removeEventListener("click", outsideRedditClick);
+    }
+
+    document.querySelectorAll("th[data-sort]").forEach(th => th.addEventListener("click", () => sortBy(th.dataset.sort)));
+
+    buildUntracked();
+    sortBy("tierRating");
+  </script>
+</body>
+</html>
